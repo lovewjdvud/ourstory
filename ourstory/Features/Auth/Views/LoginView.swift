@@ -22,10 +22,13 @@ struct LoginView: View {
                            color: .green)
                 .padding(EdgeInsets(top: 150, leading: 0, bottom: 0, trailing: 0))
                 
-                OUTextView(text: "우리들의 이야기를 서로 공유해요",
+                OUTextView(text: "서로에게 서로가, 우리들의 이야기 ",
                            size: 20,
                            style: .semiBold,
-                           color: .green)
+                           color: .green,
+                           maxLines: 2,
+                           lineSpacing: 10,
+                           alignment: .center)
                 .padding(EdgeInsets(top: 20, leading: 0, bottom: 200, trailing: 0))
                 
                 GoogleSignInButton()

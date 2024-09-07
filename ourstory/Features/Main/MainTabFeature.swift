@@ -21,6 +21,9 @@ struct MainTabFeature: Reducer {
         case profile(ProfileFeature.Action)
     }
     
+    init() {
+        print("MainTabFeature init \(UserDefaultsManager.shared.loadUserProfile()?.email ?? "")")
+    }
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {

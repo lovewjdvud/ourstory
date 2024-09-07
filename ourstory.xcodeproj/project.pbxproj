@@ -16,7 +16,7 @@
 		690382D42C8582DA00D7681E /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690382D32C8582DA00D7681E /* NetworkError.swift */; };
 		690382DB2C858FC700D7681E /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 690382DA2C858FC700D7681E /* ComposableArchitecture */; };
 		690382DE2C8590D300D7681E /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 690382DD2C8590D300D7681E /* Alamofire */; };
-		690382E82C85A30C00D7681E /* AuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690382E72C85A30C00D7681E /* AuthClient.swift */; };
+		690382E82C85A30C00D7681E /* UserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690382E72C85A30C00D7681E /* UserClient.swift */; };
 		690382F12C85A64600D7681E /* CommonClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690382F02C85A64600D7681E /* CommonClient.swift */; };
 		690382F32C85A65100D7681E /* BoardClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690382F22C85A65100D7681E /* BoardClient.swift */; };
 		690382F62C85A66400D7681E /* ChatRoomClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690382F52C85A66400D7681E /* ChatRoomClient.swift */; };
@@ -75,7 +75,7 @@
 		690382CE2C85828000D7681E /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		690382D12C8582BC00D7681E /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		690382D32C8582DA00D7681E /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
-		690382E72C85A30C00D7681E /* AuthClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthClient.swift; sourceTree = "<group>"; };
+		690382E72C85A30C00D7681E /* UserClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClient.swift; sourceTree = "<group>"; };
 		690382F02C85A64600D7681E /* CommonClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonClient.swift; sourceTree = "<group>"; };
 		690382F22C85A65100D7681E /* BoardClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardClient.swift; sourceTree = "<group>"; };
 		690382F52C85A66400D7681E /* ChatRoomClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomClient.swift; sourceTree = "<group>"; };
@@ -181,7 +181,7 @@
 		690382CB2C85825100D7681E /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				690382E72C85A30C00D7681E /* AuthClient.swift */,
+				690382E72C85A30C00D7681E /* UserClient.swift */,
 				690382F52C85A66400D7681E /* ChatRoomClient.swift */,
 				690382F22C85A65100D7681E /* BoardClient.swift */,
 				690382F02C85A64600D7681E /* CommonClient.swift */,
@@ -396,7 +396,7 @@
 			children = (
 				6903837E2C883F8100D7681E /* Common */,
 				690383712C87421B00D7681E /* Enums */,
-				690383272C85DEB600D7681E /* Auth */,
+				690383272C85DEB600D7681E /* User */,
 				690383262C85DEB300D7681E /* Profile */,
 			);
 			path = Models;
@@ -409,13 +409,13 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
-		690383272C85DEB600D7681E /* Auth */ = {
+		690383272C85DEB600D7681E /* User */ = {
 			isa = PBXGroup;
 			children = (
 				690382EE2C85A3FC00D7681E /* Request */,
 				690382EF2C85A40100D7681E /* Response */,
 			);
-			path = Auth;
+			path = User;
 			sourceTree = "<group>";
 		};
 		690383282C85DF1C00D7681E /* Resources */ = {
@@ -650,7 +650,7 @@
 			files = (
 				6903837D2C881CD100D7681E /* UserProfileImageModel.swift in Sources */,
 				6903832A2C85F45100D7681E /* BoardView.swift in Sources */,
-				690382E82C85A30C00D7681E /* AuthClient.swift in Sources */,
+				690382E82C85A30C00D7681E /* UserClient.swift in Sources */,
 				690383812C883F9900D7681E /* BaseModel.swift in Sources */,
 				690383502C86CBD000D7681E /* OUTextView.swift in Sources */,
 				690382D22C8582BC00D7681E /* NetworkManager.swift in Sources */,

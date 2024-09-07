@@ -12,6 +12,7 @@ struct MainTabView: View {
     let store: StoreOf<MainTabFeature>
 
     var body: some View {
+        
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             TabView {
                 BoardView(store: store.scope(state: \.boardState, action: \.board))
@@ -25,5 +26,6 @@ struct MainTabView: View {
                     }
             }
         }
+        
     }
 }

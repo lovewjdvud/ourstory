@@ -32,26 +32,33 @@ struct AuthFeature: Reducer {
     
     enum Action: BindableAction,Equatable {
         case binding(BindingAction<State>)
+        
         case signIn(String,String)
+        case signInResponse(TaskResult<Int>)
+        
         case signUp(String,String)
+        case signUpResponse(TaskResult<SignUpResponseModel>)
         
         case signGoogleButtonTapped
         case signKakaoButtonTapped
         case signAppleButtonTapped
         
-        
-        case signUpResponse(TaskResult<SignUpResponseModel>)
-        case signInResponse(TaskResult<SignInResponseModel?>)
+      
 
+
+        case fetchProfileInfo(Int)
+        case fetchProfileInfoResponse(TaskResult<UserProfileModel>)
+        
         case cancelFail(CancelID,String)
     }
     
-    @Dependency(\.authClient) var authClient
+    @Dependency(\.userClient) var userClient
     
     enum CancelID {
         case signUp
         case signIn
         case googleSignIn
+        case fetchProfileInfo
     }
     
     init() {
@@ -73,12 +80,23 @@ struct AuthFeature: Reducer {
                     do {
                         print("AuthFeature Action signIn 네트워크 시작 \(email)")
                         let signInRequestModel = SignInRequestModel(email: email)
-                        let signInResult = try await authClient.signIn(signInRequestModel)
+                        let signInResult = try await userClient.signIn(signInRequestModel)
                         print("AuthFeature Action signIn -> \(String(describing: signInResult?.detail_msg ?? "")), state code \(signInResult?.result_cd ?? -1)")
                         switch signInResult?.result_cd {
                         case 20 : // 로그인 성공
                             print("AuthFeature Action signIn result : 로그인 성공")
-                            await send(.signInResponse(.success(signInResult)))
+                            if let token = signInResult?.data?.accessToken ,
+                               let user_id = signInResult?.data?.user_id {
+                              
+                                AuthManager.shared.setToken(token)
+                                await send(.fetchProfileInfo(user_id))
+                                
+                            } else {
+                                await send(.signInResponse(.success(signInResult?.result_cd ?? -1)))
+                                print("AuthFeature Action signIn result : 로그인 성공 - 토큰이 없음")
+                            }
+                                
+//                            await send(.signInResponse(.success(signInResult)))
                             break
                             
                         case 411: // 아이디가 존재하지 않을 때
@@ -104,7 +122,7 @@ struct AuthFeature: Reducer {
                 }
                 .cancellable(id: CancelID.signIn)
                 
-            case .signInResponse(.success(let result)):
+            case .signInResponse(.success(_)):
                 print("AuthFeature Action signInResponse success 진입")
                 state.isSignin = true
                 return .none
@@ -126,7 +144,7 @@ struct AuthFeature: Reducer {
                                                                     phoneNumber: nil,
                                                                     profileImageUrl: nil,
                                                                     snsType: nil)
-                        let signUpResult = try await authClient.signUp(signUpRequestModel)
+                        let signUpResult = try await userClient.signUp(signUpRequestModel)
                         print("AuthFeature Action signUp result : state code \(signUpResult?.result_cd ?? -1)")
                         switch signUpResult?.result_cd {
                             
@@ -161,10 +179,6 @@ struct AuthFeature: Reducer {
                 state.error = error.localizedDescription
                 return .none
                 
-    
-            case .cancelFail(let cancelEnum ,let result_msg):
-                print("AuthFeature Action cancelFail msg = \(result_msg), cancel \(cancelEnum)")
-                return .cancel(id: cancelEnum)
                 
             // MARK: 구글,카카오,애픓 로그인 버튼
             case .signGoogleButtonTapped:
@@ -188,7 +202,42 @@ struct AuthFeature: Reducer {
             case .signAppleButtonTapped:
                 return .none
                 
-
+                
+            // MARK: 유저 정보 요청
+            case .fetchProfileInfo(let user_id):
+                print("AuthFeature Action fetchProfileInfo 진입")
+                return .run { send in
+                    do {
+                        let result = try await userClient.fetchProfileInfo(user_id)
+                        
+                        print("AuthFeature Action fetchProfileInfo 결과 \(result?.result_cd ?? -1) \(result?.result_msg ?? "")")
+                        
+                        switch result?.result_cd {
+                        case 20:
+                            if let userProfileInfo = result?.data {
+                                UserDefaultsManager.shared.saveUserProfile(userProfileInfo)
+                            }
+                            await send(.signInResponse(.success(result?.result_cd ?? -1)))
+                            break
+                        default:
+                            
+                            break
+                        
+                        }
+                    } catch(let error) {
+                        await send(.cancelFail(.fetchProfileInfo, "유저 정보 요청 실패 error msg \(error.localizedDescription)"))
+                    }
+                }
+                .cancellable(id: CancelID.fetchProfileInfo)
+                
+            case .fetchProfileInfoResponse(let result_UserProfileModel):
+                return .none
+                
+    
+                
+            case .cancelFail(let cancelEnum ,let result_msg):
+                print("AuthFeature Action cancelFail msg = \(result_msg), cancel \(cancelEnum)")
+                return .cancel(id: cancelEnum)
             }
         }
     }

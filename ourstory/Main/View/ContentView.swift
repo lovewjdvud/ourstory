@@ -18,7 +18,9 @@ struct ContentView: View {
                 if viewStore.authTab.isSignin {
                     MainTabView(store: store.scope(state: \.mainTab, action: \.mainTab))
                 } else {
+                    
                     LoginView(store: store.scope(state: \.authTab, action: \.authTab))
+                    
                 }
             }
             .onAppear {

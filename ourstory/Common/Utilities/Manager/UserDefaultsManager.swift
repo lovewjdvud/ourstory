@@ -16,17 +16,17 @@ class UserDefaultsManager {
         case userProfile
     }
     
-    func saveUserProfile(_ profile: UserProfileModel) {
+    func saveUserProfile(_ profile: UserProfileData) {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(profile) {
             defaults.set(encoded, forKey: Keys.userProfile.rawValue)
         }
     }
     
-    func loadUserProfile() -> UserProfileModel? {
+    func loadUserProfile() -> UserProfileData? {
         if let savedProfile = defaults.object(forKey: Keys.userProfile.rawValue) as? Data {
             let decoder = JSONDecoder()
-            if let loadedProfile = try? decoder.decode(UserProfileModel.self, from: savedProfile) {
+            if let loadedProfile = try? decoder.decode(UserProfileData.self, from: savedProfile) {
                 return loadedProfile
             }
         }

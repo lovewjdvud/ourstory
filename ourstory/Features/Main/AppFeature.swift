@@ -46,7 +46,12 @@ struct AppFeature: Reducer {
             case .mainTab:
                 return .none
                 
-            case .authTab:
+            case .authTab(let authAction):
+                // 만약 authTab에서 로그인 성공 액션이 발생하면
+                    if case .signInResponse(.success(_)) = authAction {
+                        state.isLoggedIn = true
+                    }
+                
                 return .none
             }
         }
@@ -61,71 +66,3 @@ struct AppFeature: Reducer {
     }
     
 }
-
-//
-//ourstoryApp
-//│
-//├── App
-//│   ├── Config
-//│   │   ├── AppConfig.swift
-//│   │   └── Environment.swift
-//│   └── Main
-//│       └── ContentView.swift
-//│
-//├── Core
-//│   ├── Utilities
-//│   │   ├── AuthManager.swift
-//│   │   ├── NetworkManager.swift
-//│   │   └── CommonError.swift
-//│   ├── Models
-//│   │   ├── Auth
-//│   │   │   ├── AuthRequest.swift
-//│   │   │   └── AuthResponse.swift
-//│   │   ├── Profile
-//│   │   │   ├── ProfileRequest.swift
-//│   │   │   └── ProfileResponse.swift
-//│   │   └── Common
-//│   │       ├── Pagination.swift
-//│   │       └── ResultWrapper.swift
-//│   └── Network
-//│       ├── AuthClient.swift
-//│       ├── ChatRoomClient.swift
-//│       ├── BoardClient.swift
-//│       ├── ProfileClient.swift
-//│       └── CommonClient.swift
-//│
-//├── Features
-//│   ├── Auth
-//│   │   ├── LoginView.swift
-//│   │   ├── SignUpView.swift
-//│   │   └── AuthFeature.swift
-//│   │
-//│   ├── Profile
-//│   │   ├── ProfileView.swift
-//│   │   ├── EditProfileView.swift
-//│   │   └── ProfileFeature.swift
-//│   │
-//│   ├── Board
-//│   │   ├── BoardListView.swift
-//│   │   ├── BoardDetailView.swift
-//│   │   └── BoardFeature.swift
-//│   │
-//│   ├── Comment
-//│   │   ├── CommentListView.swift
-//│   │   ├── CommentDetailView.swift
-//│   │   └── CommentFeature.swift
-//│   │
-//│   ├── ChatRoom
-//│   │   ├── ChatListView.swift
-//│   │   ├── ChatDetailView.swift
-//│   │   └── ChatRoomFeature.swift
-//│   │
-//│   └── AppFeature.swift
-//│
-//└── Resources
-//    ├── Assets.xcassets
-//    └── Localization
-//        ├── en.lproj
-//        │   └── Localizable.strings
-//        └── ko.lproj
-//            └── Localizable.strings

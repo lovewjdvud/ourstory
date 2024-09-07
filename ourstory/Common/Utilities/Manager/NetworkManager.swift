@@ -70,11 +70,14 @@ struct NetworkManager {
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         
         // 인증이 필요한 경우 JWT 토큰을 헤더에 추가
+        
+//        print("NetworkManager AuthManager.shared.getToken() \(AuthManager.shared.getToken()) ")
         if requiresAuth {
             guard let token = AuthManager.shared.getToken() else {
                 throw NetworkError.unauthorized
             }
-            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+//            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
         do {

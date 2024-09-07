@@ -9,14 +9,15 @@ import Foundation
 import ComposableArchitecture
 import Dependencies
 
-struct AuthClient {
+struct UserClient {
     var test: @Sendable (SignInRequestModel) async throws -> JwtResponseModel?
     var signIn: @Sendable (SignInRequestModel) async throws -> SignInResponseModel?
     var signUp: @Sendable (SignUpRequestModel) async throws -> SignUpResponseModel?
     var profileUpdate: @Sendable (UserProfileModel) async throws -> UserProfileModel?
+    var fetchProfileInfo: @Sendable (Int) async throws -> UserProfileModel?
 }
 
-extension AuthClient: DependencyKey {
+extension UserClient: DependencyKey {
     static let liveValue: Self = {
         let networkManager = NetworkManager(baseURL: Config.baseURL)
         
@@ -42,71 +43,32 @@ extension AuthClient: DependencyKey {
                                                  method: .post,
                                                  queryItems: [],
                                                  body: request_data,
-                                                 requiresAuth: false)
+                                                 requiresAuth: true)
             },
             profileUpdate: { request in
-                try await networkManager.request("/user/info/update/\(request.id)",
+                try await networkManager.request("/user/info/update/\(request.data?.id ?? -1)",
                                                  method: .put,
                                                  queryItems: [],
                                                  body: nil,
-                                                 requiresAuth: false)
+                                                 requiresAuth: true)
+            },
+            fetchProfileInfo: { user_id in
+                try await networkManager.request("/user/info/\(user_id)",
+                                                 method: .get,
+                                                 queryItems: [],
+                                                 body: nil,
+                                                 requiresAuth: true)
             }
+            
+            
         )
     }()
     
 }
 
 extension DependencyValues {
-    var authClient: AuthClient {
-        get { self[AuthClient.self] }
-        set { self[AuthClient.self] = newValue }
+    var userClient: UserClient {
+        get { self[UserClient.self] }
+        set { self[UserClient.self] = newValue }
     }
 }
-//
-//YourProject/
-//│
-//├── Features/
-//│   ├── Auth/
-//│   │   ├── Models/
-//│   │   │   ├── User.swift
-//│   │   │   └── SignUpModel.swift
-//│   │   ├── Reducers/
-//│   │   │   ├── AuthReducer.swift
-//│   │   │   ├── LoginReducer.swift
-//│   │   │   └── SignUpReducer.swift
-//│   │   └── Views/
-//│   │       ├── LoginView.swift
-//│   │       └── SignUpView.swift
-//│   │
-//│   ├── Profile/
-//│   │   ├── Models/
-//│   │   │   └── UserProfile.swift
-//│   │   ├── Reducers/
-//│   │   │   └── ProfileReducer.swift
-//│   │   └── Views/
-//│   │       └── ProfileView.swift
-//│   │
-//│   └── Notes/
-//│       ├── Models/
-//│       │   └── Note.swift
-//│       ├── Reducers/
-//│       │   ├── NotesReducer.swift
-//│       │   └── NoteDetailReducer.swift
-//│       └── Views/
-//│           ├── NotesListView.swift
-//│           └── NoteDetailView.swift
-//│
-//├── Core/
-//│   ├── Network/
-//│   │   ├── NetworkManager.swift
-//│   │   ├── APIEndpoints.swift
-//│   │   └── NetworkError.swift
-//│   └── Utilities/
-//│       └── DateFormatter.swift
-//│
-//├── Dependencies/
-//│   ├── AuthClient.swift
-//│   ├── ProfileClient.swift
-//│   └── NotesClient.swift
-//│
-//└── App.swift
