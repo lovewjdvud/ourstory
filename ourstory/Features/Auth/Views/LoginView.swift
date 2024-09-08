@@ -14,37 +14,44 @@ struct LoginView: View {
     
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
-            VStack(alignment:.center,spacing:0) {
+            ZStack {
+                VStack(alignment:.center,spacing:0) {
+                    
+                    OUTextView(text: "OUR STORY",
+                               size: 50,
+                               style: .bold,
+                               color: .green)
+                    .padding(EdgeInsets(top: 150, leading: 0, bottom: 0, trailing: 0))
+                    
+                    OUTextView(text: "서로에게 서로가, 우리들의 이야기 ",
+                               size: 20,
+                               style: .semiBold,
+                               color: .green,
+                               maxLines: 2,
+                               lineSpacing: 10,
+                               alignment: .center)
+                    .padding(EdgeInsets(top: 20, leading: 0, bottom: 200, trailing: 0))
+                    
+                    GoogleSignInButton()
+                        .frame(width: 280, height: 50)
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                        .onTapGesture {
+                            viewStore.send(.signGoogleButtonTapped)
+                            
+                        }
+                    
+                }
+                .frame(maxWidth:.infinity,maxHeight: .infinity,alignment: .top)
+                .zIndex(0)
                 
-                OUTextView(text: "OUR STORY",
-                           size: 50,
-                           style: .bold,
-                           color: .green)
-                .padding(EdgeInsets(top: 150, leading: 0, bottom: 0, trailing: 0))
-                
-                OUTextView(text: "서로에게 서로가, 우리들의 이야기 ",
-                           size: 20,
-                           style: .semiBold,
-                           color: .green,
-                           maxLines: 2,
-                           lineSpacing: 10,
-                           alignment: .center)
-                .padding(EdgeInsets(top: 20, leading: 0, bottom: 200, trailing: 0))
-                
-                GoogleSignInButton()
-                           .frame(width: 280, height: 50)
-                           .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                           .onTapGesture {
-                               viewStore.send(.signGoogleButtonTapped)
-                           }
-                
-//                if viewStore.isSigningUp {
-//                    ProgressView()
-//                }
-//                
-//                if let user = viewStore.user {
-//                    Text("Welcome, \(user.email)")
-//                }
+                if viewStore.isProgress != false {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .green))
+                        .frame(maxWidth:.infinity,maxHeight:.infinity)
+                        .background(Color.black.opacity(0.5))
+                        .scaleEffect(2)
+                        .zIndex(2)
+                }
                 
             }
             .frame(maxWidth:.infinity,maxHeight: .infinity,alignment: .top)

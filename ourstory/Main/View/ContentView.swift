@@ -15,12 +15,13 @@ struct ContentView: View {
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             Group {
-                if viewStore.authTab.isSignin {
+                if viewStore.isLoggedIn {
                     MainTabView(store: store.scope(state: \.mainTab, action: \.mainTab))
                 } else {
                     
                     LoginView(store: store.scope(state: \.authTab, action: \.authTab))
                     
+    
                 }
             }
             .onAppear {

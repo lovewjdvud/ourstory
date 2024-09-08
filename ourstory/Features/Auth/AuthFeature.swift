@@ -13,8 +13,9 @@ import SwiftUI
 struct AuthFeature: Reducer {
     
     struct State: Equatable {
+        var isProgress: Bool = false
         var isSigningUp : Bool = false
-        var isSignin : Bool = false
+//        var isSignin : Bool = false
         var user: UserProfileModel?
         
         var googleAuthManager = GoogleAuthManager()
@@ -33,21 +34,21 @@ struct AuthFeature: Reducer {
     enum Action: BindableAction,Equatable {
         case binding(BindingAction<State>)
         
-        case signIn(String,String)
-        case signInResponse(TaskResult<Int>)
         
-        case signUp(String,String)
-        case signUpResponse(TaskResult<SignUpResponseModel>)
+        case signIn(String,String)
+        case signInResponse(SignInResponseModel?,String,String)
         
         case signGoogleButtonTapped
         case signKakaoButtonTapped
         case signAppleButtonTapped
         
-      
+        case signUp(String,String)
+        case signUpResponse(SignUpResponseModel,String,String)
 
-
+        case navigateToMainTab
+        
         case fetchProfileInfo(Int)
-        case fetchProfileInfoResponse(TaskResult<UserProfileModel>)
+        case fetchProfileInfoResponse(UserProfileModel?)
         
         case cancelFail(CancelID,String)
     }
@@ -78,59 +79,54 @@ struct AuthFeature: Reducer {
                 print("AuthFeature Action signIn 진입")
                 return .run { send in
                     do {
-                        print("AuthFeature Action signIn 네트워크 시작 \(email)")
                         let signInRequestModel = SignInRequestModel(email: email)
                         let signInResult = try await userClient.signIn(signInRequestModel)
-                        print("AuthFeature Action signIn -> \(String(describing: signInResult?.detail_msg ?? "")), state code \(signInResult?.result_cd ?? -1)")
-                        switch signInResult?.result_cd {
-                        case 20 : // 로그인 성공
-                            print("AuthFeature Action signIn result : 로그인 성공")
-                            if let token = signInResult?.data?.accessToken ,
-                               let user_id = signInResult?.data?.user_id {
-                              
-                                AuthManager.shared.setToken(token)
-                                await send(.fetchProfileInfo(user_id))
-                                
-                            } else {
-                                await send(.signInResponse(.success(signInResult?.result_cd ?? -1)))
-                                print("AuthFeature Action signIn result : 로그인 성공 - 토큰이 없음")
-                            }
-                                
-//                            await send(.signInResponse(.success(signInResult)))
-                            break
-                            
-                        case 411: // 아이디가 존재하지 않을 때
-                            print("AuthFeature Action signIn result : 아이디가 존재하지 않음")
-                            await send(.signUp(email, name))
-                            break
-                            
-                        case 40: // 로그인 실패
-                            print("AuthFeature Action signIn result : 로그인 실패")
-                            break
-                        default :
-                            break
-                        }
-                        
-                   
-                        
+                        await send(.signInResponse(signInResult,email,name))
                     } catch(let error as NetworkError) {
-                        print("AuthFeature Action signIn fail \(error.localizedDescription)")
                         await send(.cancelFail(.signIn, " signIn fail \(error.localizedDescription)"))
                     }
                         
-//                    print("AuthFeature Action signIn \(signInResult?.result_msg ?? "")")
                 }
                 .cancellable(id: CancelID.signIn)
                 
-            case .signInResponse(.success(_)):
+            case .signInResponse(let signInResult,let email,let name):
                 print("AuthFeature Action signInResponse success 진입")
-                state.isSignin = true
-                return .none
-                
-            case .signInResponse(.failure(let error)):
-                state.isSignin = false
-                state.error = error.localizedDescription
-                return .none
+                return .run { send in
+                    switch signInResult?.result_cd {
+                    case 20 : // 로그인 성공
+                        print("AuthFeature Action signIn result : 로그인 성공")
+                        if let token = signInResult?.data?.accessToken ,
+                           let user_id = signInResult?.data?.user_id {
+                            
+                            AuthManager.shared.setToken(token)
+                            await send(.fetchProfileInfo(user_id))
+                            
+                        } else {
+                            await send(.navigateToMainTab)
+                            print("AuthFeature Action signIn result : 로그인 성공 - 토큰이 없음")
+                        }
+                        
+                        //                            await send(.signInResponse(.success(signInResult)))
+                        break
+                        
+                    case 411: // 아이디가 존재하지 않을 때
+                        print("AuthFeature Action signIn result : 아이디가 존재하지 않음")
+                        await send(.signUp(email, name))
+                        break
+                        
+                    case 40: // 로그인 실패
+                        print("AuthFeature Action signIn result : 로그인 실패")
+                        await send(.cancelFail(.signIn, " 로그인 실패 "))
+                        break
+                    default :
+                        break
+                    }
+                }
+            
+//            case .signInResponse(.failure(let error)):
+//              
+//                state.error = error.localizedDescription
+//                return .none
                 
             // MARK: 회원가입 요청,응답 및 로그아웃
             case .signUp(let email, let name):
@@ -144,55 +140,58 @@ struct AuthFeature: Reducer {
                                                                     phoneNumber: nil,
                                                                     profileImageUrl: nil,
                                                                     snsType: nil)
-                        let signUpResult = try await userClient.signUp(signUpRequestModel)
-                        print("AuthFeature Action signUp result : state code \(signUpResult?.result_cd ?? -1)")
-                        switch signUpResult?.result_cd {
-                            
-                        case 20:
-                            print("AuthFeature Action signUp result : 회원가입 성공")
-                            await send(.signIn(signUpResult?.data?.email ?? "",signUpResult?.data?.name ?? ""))
-                            break
-                        case 421 :
-                            print("AuthFeature Action signUp result : 회원가입 아이디가 이미 존재합니다 ")
-                            await send(.signIn(email,name))
-                            break
-                        default:
-                            print("AuthFeature Action signUp result default \(signUpResult?.result_cd ?? -1) ")
-                            break
+                        let signUpResultModel = try await userClient.signUp(signUpRequestModel)
+                        if let signUpResult = signUpResultModel {
+                            await send(.signUpResponse(signUpResult,email,name))
                         }
-                        print("AuthFeature Action signUp result -> \(signUpResult?.result_msg ?? "") ")
+                      
                     } catch(let error as NetworkError) {
-                        print("AuthFeature Action signUp result : fail \(error.localizedDescription)")
+                       
+                        await send(.cancelFail(.signUp, " signIn fail \(error.localizedDescription)"))
                     }
                     
                 }
                 .cancellable(id: CancelID.signUp)
                 
-            case .signUpResponse(.success(let result)):
+            case .signUpResponse(let signUpResult,let email,let name):
 //                state.isSigningUp = false
-//                state.user = user
-                return .none
-            
-           
-            case .signUpResponse(.failure(let error)):
-                state.isSigningUp = false
-                state.error = error.localizedDescription
-                return .none
+//                 state.isProgress = false
+                print("AuthFeature Action signUpResponse : state code \(signUpResult.result_cd)")
+                return .run { send in
+                    switch signUpResult.result_cd {
+                        
+                    case 20:
+                        print("AuthFeature Action signUp result : 회원가입 성공")
+                        await send(.signIn(signUpResult.data?.email ?? "",signUpResult.data?.name ?? ""))
+                        break
+                    case 421 :
+                        print("AuthFeature Action signUp result : 회원가입 아이디가 이미 존재합니다 ")
+                        await send(.signIn(email,name))
+                        break
+                    default:
+                        print("AuthFeature Action signUp result default \(signUpResult.result_cd) ")
+                        await send(.cancelFail(.signUp, " signIn fail \(signUpResult.result_msg ?? "")"))
+                        break
+                    }
+                }
+        
                 
                 
             // MARK: 구글,카카오,애픓 로그인 버튼
             case .signGoogleButtonTapped:
                 print("AuthFeature Action signGoogleButtonTapped")
-                return .run { send in
-                        let result = await GoogleAuthManager().signIn()
-                       switch result {
-                       case .success(let userInfo):
-                           print("AuthFeature Action signGoogleButtonTapped Google Success")
-                           await send(.signIn(userInfo.email,userInfo.name))
-                       case .failure(let error):
-                           await send(.cancelFail(.googleSignIn,"로그인 실패 : \(error)"))
-                       }
-                }
+                state.isProgress.toggle()
+                return .none
+//                return .run { send in
+//                        let result = await GoogleAuthManager().signIn()
+//                       switch result {
+//                       case .success(let userInfo):
+//                           print("AuthFeature Action signGoogleButtonTapped Google Success")
+//                           await send(.signIn(userInfo.email,userInfo.name))
+//                       case .failure(let error):
+//                           await send(.cancelFail(.googleSignIn,"로그인 실패 : \(error)"))
+//                       }
+//                }
 
                
             case .signKakaoButtonTapped:
@@ -209,69 +208,42 @@ struct AuthFeature: Reducer {
                 return .run { send in
                     do {
                         let result = try await userClient.fetchProfileInfo(user_id)
+                        await send(.fetchProfileInfoResponse(result))
                         
-                        print("AuthFeature Action fetchProfileInfo 결과 \(result?.result_cd ?? -1) \(result?.result_msg ?? "")")
-                        
-                        switch result?.result_cd {
-                        case 20:
-                            if let userProfileInfo = result?.data {
-                                UserDefaultsManager.shared.saveUserProfile(userProfileInfo)
-                            }
-                            await send(.signInResponse(.success(result?.result_cd ?? -1)))
-                            break
-                        default:
-                            
-                            break
-                        
-                        }
                     } catch(let error) {
                         await send(.cancelFail(.fetchProfileInfo, "유저 정보 요청 실패 error msg \(error.localizedDescription)"))
                     }
                 }
                 .cancellable(id: CancelID.fetchProfileInfo)
                 
-            case .fetchProfileInfoResponse(let result_UserProfileModel):
-                return .none
+            case .fetchProfileInfoResponse(let userProfileInfo):
+                print("AuthFeature Action fetchProfileInfo 진입 result_cd \(userProfileInfo?.result_cd ?? -1)")
+                return .run { send in
+                    switch userProfileInfo?.result_cd {
+                    case 20:
+                        if let userProfileInfo = userProfileInfo?.data {
+                            UserDefaultsManager.shared.saveUserProfile(userProfileInfo)
+                        }
+                        await send(.navigateToMainTab)
+//                            await send(.signInResponse(result))
+                        break
+                    default:
+                        await send(.cancelFail(.fetchProfileInfo, "AuthFeature fetchProfileInfo 프로필 정보 실패"))
+                        await send(.navigateToMainTab)
+                        break
+                    
+                    }
+                }
                 
     
+            case.navigateToMainTab:
+                return .none
                 
             case .cancelFail(let cancelEnum ,let result_msg):
                 print("AuthFeature Action cancelFail msg = \(result_msg), cancel \(cancelEnum)")
+                state.isProgress = false
                 return .cancel(id: cancelEnum)
             }
         }
     }
 }
-
-//이 Reducer는 다음과 같은 기능을 수행합니다:
-//State는 로딩 상태, 사용자 정보, 오류 메시지를 관리합니다.
-//Action은 회원가입 버튼 탭과 회원가입 응답을 처리합니다.
-//reduce 함수에서:
-//signUpButtonTapped 액션이 발생하면 로딩 상태를 true로 설정하고 authClient.signUp을 호출합니다.
-//signUpResponse 액션에서는 성공 또는 실패에 따라 상태를 업데이트합니다.
-//이 Reducer를 사용하려면 다음과 같이 Store를 생성하고 SwiftUI View에 연결할 수 있습니다:
-//swift
-//struct AuthView: View {
-//    let store: StoreOf<AuthFeature>
-//
-//    var body: some View {
-//        WithViewStore(self.store, observe: { $0 }) { viewStore in
-//            VStack {
-//                if viewStore.isLoading {
-//                    ProgressView()
-//                } else if let user = viewStore.user {
-//                    Text("Welcome, \(user.name)")
-//                } else {
-//                    Button("Sign Up") {
-//                        viewStore.send(.signUpButtonTapped)
-//                    }
-//                }
-//                
-//                if let error = viewStore.error {
-//                    Text(error)
-//                        .foregroundColor(.red)
-//                }
-//            }
-//        }
-//    }
-//}

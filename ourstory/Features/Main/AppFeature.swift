@@ -12,8 +12,11 @@ import ComposableArchitecture
 struct AppFeature: Reducer {
     
     struct State: Equatable {
+        var isProgress: Bool = false
+        
         var isLoggedIn: Bool = false
         var isLoggedIn2: Bool = false
+        
         var mainTab = MainTabFeature.State()
         var authTab = AuthFeature.State()
     }
@@ -47,9 +50,10 @@ struct AppFeature: Reducer {
                 return .none
                 
             case .authTab(let authAction):
-                // 만약 authTab에서 로그인 성공 액션이 발생하면
-                    if case .signInResponse(.success(_)) = authAction {
+                // 만약 authTab에서 로그인 성공 액션이 발생하면 업데이트 됨
+                if case .navigateToMainTab = authAction {
                         state.isLoggedIn = true
+//                        state.isLoggedIn = true
                     }
                 
                 return .none
