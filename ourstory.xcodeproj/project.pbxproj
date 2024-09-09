@@ -316,7 +316,6 @@
 			children = (
 				690383592C86D83600D7681E /* AppDelegate.swift */,
 				6903835C2C86D89400D7681E /* SceneDelegate.swift */,
-				690382832C7859B200D7681E /* ourstoryApp.swift */,
 				6903836F2C873B0B00D7681E /* TestCan.swift */,
 			);
 			path = App;
@@ -507,6 +506,7 @@
 		6903835B2C86D84400D7681E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				690382832C7859B200D7681E /* ourstoryApp.swift */,
 				690382852C7859B200D7681E /* ContentView.swift */,
 				6903832D2C85F95300D7681E /* MainTabView.swift */,
 			);

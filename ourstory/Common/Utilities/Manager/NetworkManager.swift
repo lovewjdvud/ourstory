@@ -168,5 +168,70 @@ struct NetworkManager {
                throw NetworkError.invalidResponse
            }
        }
+    
+    func uploadMultipartFormData<T: Decodable>(_ endpoint: String,
+                                                   parameters: [String: String],
+                                                   fileData: [String: (data: Data, fileName: String, mimeType: String)],
+                                                   requiresAuth: Bool = true) async throws -> T {
+            guard let url = URL(string: baseURL + endpoint) else {
+                throw NetworkError.invalidURL
+            }
+
+            let boundary = "Boundary-\(UUID().uuidString)"
+            var request = URLRequest(url: url)
+            request.httpMethod = HTTPMethod.post.rawValue
+            request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+
+            if requiresAuth {
+                guard let token = AuthManager.shared.getToken() else {
+                    throw NetworkError.unauthorized
+                }
+                request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            }
+
+            let httpBody = NSMutableData()
+
+             // 텍스트 파라미터 추가
+             for (key, value) in parameters {
+                 httpBody.append("--\(boundary)\r\n".data(using: .utf8)!)
+                 httpBody.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: .utf8)!)
+                 httpBody.append("\(value)\r\n".data(using: .utf8)!)
+             }
+
+             // 파일 데이터 추가
+             for (key, (data, fileName, mimeType)) in fileData {
+                 httpBody.append("--\(boundary)\r\n".data(using: .utf8)!)
+                 httpBody.append("Content-Disposition: form-data; name=\"\(key)\"; filename=\"\(fileName)\"\r\n".data(using: .utf8)!)
+                 httpBody.append("Content-Type: \(mimeType)\r\n\r\n".data(using: .utf8)!)
+                 httpBody.append(data)
+                 httpBody.append("\r\n".data(using: .utf8)!)
+             }
+
+             httpBody.append("--\(boundary)--\r\n".data(using: .utf8)!)
+            request.httpBody = httpBody as Data
+
+            do {
+                let (data, response) = try await session.data(for: request)
+
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    throw NetworkError.invalidResponse
+                }
+
+                switch httpResponse.statusCode {
+                case 200...299:
+                    do {
+                        return try JSONDecoder().decode(T.self, from: data)
+                    } catch {
+                        throw NetworkError.decodingFailed(error)
+                    }
+                case 401:
+                    throw NetworkError.unauthorized
+                default:
+                    throw NetworkError.invalidResponse
+                }
+            } catch {
+                throw NetworkError.requestFailed(error)
+            }
+        }
 }
 

@@ -18,19 +18,20 @@ struct AuthFeature: Reducer {
 //        var isSignin : Bool = false
         var user: UserProfileModel?
         
-        var googleAuthManager = GoogleAuthManager()
+//        var googleAuthManager = GoogleAuthManager()
         
         // Equatable 프로토콜 준수 구현
-        static func == (lhs: State, rhs: State) -> Bool {
-              return lhs.isSigningUp == rhs.isSigningUp &&
-                     lhs.user == rhs.user &&
-                     lhs.error == rhs.error
-              // googleAuthManager는 비교에서 제외됩니다.
-        }
+//        static func == (lhs: State, rhs: State) -> Bool {
+//              return lhs.isSigningUp == rhs.isSigningUp &&
+//                     lhs.user == rhs.user &&
+//                     lhs.error == rhs.error
+//              // googleAuthManager는 비교에서 제외됩니다.
+//        }
         
         var error: String?
     }
-    
+    @CasePathable
+    @dynamicMemberLookup
     enum Action: BindableAction,Equatable {
         case binding(BindingAction<State>)
         
@@ -179,19 +180,20 @@ struct AuthFeature: Reducer {
                 
             // MARK: 구글,카카오,애픓 로그인 버튼
             case .signGoogleButtonTapped:
-                print("AuthFeature Action signGoogleButtonTapped")
-                state.isProgress.toggle()
-                return .none
-//                return .run { send in
-//                        let result = await GoogleAuthManager().signIn()
-//                       switch result {
-//                       case .success(let userInfo):
-//                           print("AuthFeature Action signGoogleButtonTapped Google Success")
-//                           await send(.signIn(userInfo.email,userInfo.name))
-//                       case .failure(let error):
-//                           await send(.cancelFail(.googleSignIn,"로그인 실패 : \(error)"))
-//                       }
-//                }
+               
+                state.isProgress = true
+                print("AuthFeature Action signGoogleButtonTapped \(state.isProgress)")
+              //  return .none
+                return .run { send in
+                        let result = await GoogleAuthManager().signIn()
+                       switch result {
+                       case .success(let userInfo):
+                           print("AuthFeature Action signGoogleButtonTapped Google Success")
+                           await send(.signIn(userInfo.email,userInfo.name))
+                       case .failure(let error):
+                           await send(.cancelFail(.googleSignIn,"로그인 실패 : \(error)"))
+                       }
+                }
 
                
             case .signKakaoButtonTapped:
@@ -218,6 +220,7 @@ struct AuthFeature: Reducer {
                 
             case .fetchProfileInfoResponse(let userProfileInfo):
                 print("AuthFeature Action fetchProfileInfo 진입 result_cd \(userProfileInfo?.result_cd ?? -1)")
+                state.isProgress = false
                 return .run { send in
                     switch userProfileInfo?.result_cd {
                     case 20:

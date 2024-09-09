@@ -14,6 +14,7 @@ struct LoginView: View {
     
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
+      //  WithViewStore(self.store) { viewStore in
             ZStack {
                 VStack(alignment:.center,spacing:0) {
                     
@@ -36,21 +37,22 @@ struct LoginView: View {
                         .frame(width: 280, height: 50)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                         .onTapGesture {
+                    
                             viewStore.send(.signGoogleButtonTapped)
-                            
+                    
                         }
                     
                 }
                 .frame(maxWidth:.infinity,maxHeight: .infinity,alignment: .top)
                 .zIndex(0)
                 
-                if viewStore.isProgress != false {
+                if viewStore.isProgress {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: .green))
                         .frame(maxWidth:.infinity,maxHeight:.infinity)
                         .background(Color.black.opacity(0.5))
                         .scaleEffect(2)
-                        .zIndex(2)
+                        .zIndex(1)
                 }
                 
             }

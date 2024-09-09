@@ -34,6 +34,7 @@ struct MainTabFeature: Reducer {
         Scope(state: \.boardState, action: \.board) {
             BoardFeature()
         }
+        
         Scope(state: \.profileState, action: \.profile) {
             ProfileFeature()
         }
