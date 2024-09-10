@@ -13,11 +13,36 @@ struct BoardView: View {
     
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
-            VStack {
-        
-                Text("BoardView Welcome,")
-
+            NavigationStack {
+                VStack {
+                    
+                    BoardTopView(store: store)
+                    
+                    BoardListView(store: store)
+                }
+                .frame(maxWidth:.infinity,maxHeight: .infinity,alignment: .top)
+                .background(Color.darkTextColor)
             }
         }
     }
 }
+#Preview {
+    BoardView(
+        store: Store(initialState: BoardFeature.State()) {
+            BoardFeature()
+        }
+    )
+}
+
+// 예시
+//NavigationStack {
+//           List(posts) { post in
+//               NavigationLink(value: post) {
+//                   PostRowView(post: post)
+//               }
+//           }
+//           .navigationTitle("게시글 목록")
+//           .navigationDestination(for: Post.self) { post in
+//               PostDetailView(post: post)
+//           }
+//       }

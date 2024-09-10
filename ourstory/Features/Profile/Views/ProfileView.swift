@@ -14,10 +14,12 @@ struct ProfileView: View {
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack {
-        
+                
                 Text("ProfileView Welcome,")
-
+                
             }
+            .frame(maxWidth:.infinity,maxHeight: .infinity,alignment: .top)
+            .background(Color.darkTextColor)
         }
     }
 }

@@ -23,8 +23,8 @@ struct AppFeature: Reducer {
     @CasePathable
     @dynamicMemberLookup
     enum Action: Equatable {
-        case checkToken
-        case tokenChecked(Bool)
+        case checkLogin
+        case loginChecked(Bool)
         
         case mainTab(MainTabFeature.Action)
         case authTab(AuthFeature.Action)
@@ -37,12 +37,17 @@ struct AppFeature: Reducer {
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .checkToken:
-                let tokenExists = AuthManager.shared.getToken() != nil
-                return .send(.tokenChecked(tokenExists))
+            case .checkLogin:
+                let userInfoExists = UserDefaultsManager.shared.loadUserProfile() != nil
+                return .send(.loginChecked(userInfoExists))
                 
-            case .tokenChecked(let isLoggedIn):
-                state.isLoggedIn = isLoggedIn
+            case .loginChecked(let isLoggedIn):
+                print("AppFeature loginChecked isLoggedIn \(isLoggedIn)")
+                if isLoggedIn  {
+//                    state.authTab.isProgress = true
+                    return .send(.authTab(.signGoogleButtonTapped))
+                }
+                
                 return .none
                 
             case .mainTab:

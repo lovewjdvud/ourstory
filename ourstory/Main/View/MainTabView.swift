@@ -14,18 +14,31 @@ struct MainTabView: View {
     var body: some View {
         
         WithViewStore(self.store, observe: { $0 }) { viewStore in
-            TabView {
+            TabView(selection: viewStore.binding(
+                            get: \.selectedTab,
+                            send: MainTabFeature.Action.selectTab
+                        ))
+            {
+                
                 BoardView(store: store.scope(state: \.boardState, action: \.board))
+                    .tag(Page.board)
                     .tabItem {
-                        Label("Board", systemImage: "list.bullet")
+                        HStack {
+                            Image(viewStore.selectedTab == .board ? "main_tab_board" : "main_tab_board_none" )
+                                
+                        }
                     }
                 
                 ProfileView(store: store.scope(state: \.profileState, action: \.profile))
+                    .tag(Page.profile)
                     .tabItem {
-                        Label("Profile", systemImage: "person.circle")
+                        HStack {
+                            Image(viewStore.selectedTab == .profile ? "main_tab_profile" : "main_tab_profile_none")
+                        }
                     }
-            }
-        }
+                
+            } // TabView
+        } // WithViewStore
         
     }
 }

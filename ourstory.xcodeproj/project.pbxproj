@@ -64,6 +64,13 @@
 		690383852C8840DD00D7681E /* JwtResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690383842C8840DD00D7681E /* JwtResponseModel.swift */; };
 		690383872C8891EA00D7681E /* SignInRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690383862C8891EA00D7681E /* SignInRequestModel.swift */; };
 		69349E6B2C8B26C9006F8C88 /* SignUpResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69349E6A2C8B26C9006F8C88 /* SignUpResponseModel.swift */; };
+		693B06FD2C8F136500640617 /* BoardListResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693B06FC2C8F136500640617 /* BoardListResponseModel.swift */; };
+		693B07082C901AAE00640617 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693B07072C901AAE00640617 /* Page.swift */; };
+		693B070A2C902B5A00640617 /* BoardTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693B07092C902B5A00640617 /* BoardTopView.swift */; };
+		693B070C2C905CE500640617 /* BoardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693B070B2C905CE500640617 /* BoardListView.swift */; };
+		693B070E2C905D5700640617 /* BoardAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693B070D2C905D5700640617 /* BoardAddView.swift */; };
+		693B07102C905DFB00640617 /* BoardListDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693B070F2C905DFB00640617 /* BoardListDetailView.swift */; };
+		693B07132C90624000640617 /* BoardListTestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693B07122C90624000640617 /* BoardListTestModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -120,6 +127,13 @@
 		690383842C8840DD00D7681E /* JwtResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JwtResponseModel.swift; sourceTree = "<group>"; };
 		690383862C8891EA00D7681E /* SignInRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInRequestModel.swift; sourceTree = "<group>"; };
 		69349E6A2C8B26C9006F8C88 /* SignUpResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpResponseModel.swift; sourceTree = "<group>"; };
+		693B06FC2C8F136500640617 /* BoardListResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListResponseModel.swift; sourceTree = "<group>"; };
+		693B07072C901AAE00640617 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
+		693B07092C902B5A00640617 /* BoardTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardTopView.swift; sourceTree = "<group>"; };
+		693B070B2C905CE500640617 /* BoardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListView.swift; sourceTree = "<group>"; };
+		693B070D2C905D5700640617 /* BoardAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardAddView.swift; sourceTree = "<group>"; };
+		693B070F2C905DFB00640617 /* BoardListDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListDetailView.swift; sourceTree = "<group>"; };
+		693B07122C90624000640617 /* BoardListTestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListTestModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				690383532C86CF2400D7681E /* Utils.swift */,
+				693B07062C901A9F00640617 /* Struct */,
 				690383372C86BDA200D7681E /* Extension */,
 				690383362C86BD9700D7681E /* Manager */,
 			);
@@ -214,8 +229,8 @@
 			children = (
 				690383552C86D19000D7681E /* Main */,
 				690382E12C85945E00D7681E /* Auth */,
-				690382E32C85A15700D7681E /* Profile */,
 				690382E52C85A18B00D7681E /* Board */,
+				690382E32C85A15700D7681E /* Profile */,
 				690382E42C85A18300D7681E /* Comment */,
 				690382ED2C85A3BB00D7681E /* ChatRoom */,
 			);
@@ -365,6 +380,10 @@
 			isa = PBXGroup;
 			children = (
 				690383292C85F45100D7681E /* BoardView.swift */,
+				693B070B2C905CE500640617 /* BoardListView.swift */,
+				693B070F2C905DFB00640617 /* BoardListDetailView.swift */,
+				693B070D2C905D5700640617 /* BoardAddView.swift */,
+				693B07092C902B5A00640617 /* BoardTopView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -393,10 +412,12 @@
 		690383232C85DE9600D7681E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				690383272C85DEB600D7681E /* User */,
+				693B06F92C8F12DC00640617 /* Board */,
 				6903837E2C883F8100D7681E /* Common */,
 				690383712C87421B00D7681E /* Enums */,
-				690383272C85DEB600D7681E /* User */,
 				690383262C85DEB300D7681E /* Profile */,
+				693B07112C90622C00640617 /* Test */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -558,6 +579,46 @@
 			path = Response;
 			sourceTree = "<group>";
 		};
+		693B06F92C8F12DC00640617 /* Board */ = {
+			isa = PBXGroup;
+			children = (
+				693B06FA2C8F12E800640617 /* Request */,
+				693B06FB2C8F12F000640617 /* Response */,
+			);
+			path = Board;
+			sourceTree = "<group>";
+		};
+		693B06FA2C8F12E800640617 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		693B06FB2C8F12F000640617 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				693B06FC2C8F136500640617 /* BoardListResponseModel.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		693B07062C901A9F00640617 /* Struct */ = {
+			isa = PBXGroup;
+			children = (
+				693B07072C901AAE00640617 /* Page.swift */,
+			);
+			path = Struct;
+			sourceTree = "<group>";
+		};
+		693B07112C90622C00640617 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				693B07122C90624000640617 /* BoardListTestModel.swift */,
+			);
+			path = Test;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -662,14 +723,17 @@
 				6903832C2C85F47200D7681E /* BoardFeature.swift in Sources */,
 				6903831F2C85DB4D00D7681E /* ProfileFeature.swift in Sources */,
 				6903832E2C85F95300D7681E /* MainTabView.swift in Sources */,
+				693B07082C901AAE00640617 /* Page.swift in Sources */,
 				690382862C7859B200D7681E /* ContentView.swift in Sources */,
 				690382F32C85A65100D7681E /* BoardClient.swift in Sources */,
 				690382F82C85A68C00D7681E /* ProfileClient.swift in Sources */,
 				69349E6B2C8B26C9006F8C88 /* SignUpResponseModel.swift in Sources */,
 				690382F12C85A64600D7681E /* CommonClient.swift in Sources */,
+				693B06FD2C8F136500640617 /* BoardListResponseModel.swift in Sources */,
 				690383522C86CBEA00D7681E /* OUTextFieldView.swift in Sources */,
 				690383002C85BCC300D7681E /* Config.swift in Sources */,
 				6903836A2C872E5E00D7681E /* GoogleSignInButton.swift in Sources */,
+				693B07132C90624000640617 /* BoardListTestModel.swift in Sources */,
 				690382F62C85A66400D7681E /* ChatRoomClient.swift in Sources */,
 				690383732C8746D900D7681E /* GoogleAuthManager.swift in Sources */,
 				690383322C85F9B100D7681E /* ProfileView.swift in Sources */,
@@ -685,8 +749,12 @@
 				6903833E2C86BEA100D7681E /* Font+.swift in Sources */,
 				690382842C7859B200D7681E /* ourstoryApp.swift in Sources */,
 				690383872C8891EA00D7681E /* SignInRequestModel.swift in Sources */,
+				693B07102C905DFB00640617 /* BoardListDetailView.swift in Sources */,
+				693B070C2C905CE500640617 /* BoardListView.swift in Sources */,
 				6903837B2C881AEC00D7681E /* UserDefaultsManager.swift in Sources */,
+				693B070E2C905D5700640617 /* BoardAddView.swift in Sources */,
 				690383702C873B0B00D7681E /* TestCan.swift in Sources */,
+				693B070A2C902B5A00640617 /* BoardTopView.swift in Sources */,
 				6903835D2C86D89400D7681E /* SceneDelegate.swift in Sources */,
 				690382FC2C85A96600D7681E /* UserProfileModel.swift in Sources */,
 				6903834E2C86CA3200D7681E /* String+.swift in Sources */,

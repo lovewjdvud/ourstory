@@ -15,42 +15,19 @@ struct ContentView: View {
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack {
-                if viewStore.isLoggedIn {
-                    MainTabView(store: store.scope(state: \.mainTab, action: \.mainTab))
-                } else {
-                    
-                    LoginView(store: store.scope(state: \.authTab, action: \.authTab))
-                    
-//                    LoginView(store: Store(initialState: AuthFeature.State()) {
-//                                AuthFeature()
-//                              }
-//                    )
-                    
-                    
-//                    GoogleSignInButton()
-//                        .frame(width: 280, height: 50)
-//                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-//                        .onTapGesture {
+                MainTabView(store: store.scope(state: \.mainTab, action: \.mainTab))
+                
+//                if viewStore.isLoggedIn {
+//                    MainTabView(store: store.scope(state: \.mainTab, action: \.mainTab))
+//                } else {
 //                    
-//                            viewStore.send(.checkToken)
+//                    LoginView(store: store.scope(state: \.authTab, action: \.authTab))
 //                    
-//                        }
-//                    
-//                    
-//                    if viewStore.isProgress {
-//                        ProgressView()
-//                            .progressViewStyle(CircularProgressViewStyle(tint: .green))
-//                            .frame(maxWidth:.infinity,maxHeight:.infinity)
-//                            .background(Color.black.opacity(0.5))
-//                            .scaleEffect(2)
-//                            .zIndex(1)
-//                    }
-
-                }
+//                }
             }
             .frame(maxWidth:.infinity,maxHeight: .infinity)
             .onAppear {
-//                viewStore.send(.checkToken)
+                viewStore.send(.checkLogin)
             }
         }
     }
