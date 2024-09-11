@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ITNavigationViewLink<Label: View, Destination: View>: View {
+struct OUNavigationViewLink<Label: View, Destination: View>: View {
     @ViewBuilder private let destination: () -> Destination
     @Environment(\.presentationMode) var presentationMode
     let label: Label
@@ -24,15 +24,10 @@ struct ITNavigationViewLink<Label: View, Destination: View>: View {
             label
             
             NavigationLink {
-//                ITNavigationBarContainerView( content : {
-//                    destination()
-//                        .navigationBarHidden(true)
-//                  
-//                })
-                
-                ITNavigationBarContainerView(
+
+                OUNavigationBarContainerView(
                     left: {
-//                        subTitleBudton
+//                    subTitleBudton
                 }, content: {
                     destination()
                         .navigationBarHidden(true)
@@ -54,7 +49,7 @@ struct ITNavigationViewLink<Label: View, Destination: View>: View {
 
 
 
-struct ITNavigationBarContainerView<L, Content,R>: View  where L: View,
+struct OUNavigationBarContainerView<L, Content,R>: View  where L: View,
                                                                Content: View,
                                                                R: View {
     let content: Content

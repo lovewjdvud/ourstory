@@ -16,7 +16,10 @@ extension Color {
     static let darkTextColor: Color = Color((80, 80, 80))
     static let textColor: Color = Color((150, 150, 150))
     static let dividerColor: Color = Color((224, 224, 224))
+    
     static let mainBackgroundColor: Color = Color(red: 31/255, green: 28/255, blue: 28/255)
+    static let mainLightColor: Color = Color(red: 77 / 255, green: 73 / 255, blue: 73 / 255)
+    
     //Color(red: 31/255, green: 28/255, blue: 28/255)
     
 }

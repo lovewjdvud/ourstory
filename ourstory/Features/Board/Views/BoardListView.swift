@@ -17,21 +17,25 @@ struct BoardListView: View {
             List {
                 ForEach(viewStore.boardList) { list in
 
-                    ITNavigationViewLink (
+                    OUNavigationViewLink (
                         destination: {
+                        
                         BoardListDetailView(store: store)
-                            .ouNavigationSubtitle("테스트")
+                            
                     },
                         label: {
-                            BoardListRawView(store: store)
-                                .frame(maxWidth:.infinity,maxHeight: 400)
-                                .listRowSeparator(.hidden)
-                                .listRowInsets(EdgeInsets())
+                            
+                            BoardListRawView(store: store,
+                                             list: list)
                             
                     },
                         title: "게시글"
                     )
-                  
+                    .frame(maxWidth:.infinity,minHeight: 200,maxHeight: 300)
+//                    .background(Color.red)
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets())
+                   
                 }
             }
             .background(Color.mainBackgroundColor)
@@ -39,23 +43,66 @@ struct BoardListView: View {
         }
     }
 }
-
 struct BoardListRawView: View {
     let store: StoreOf<BoardFeature>
+    let list : BoardListTestModel
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
-            VStack {
-                OUTextView(text: "OURSTORY ㅋㅋ",
-                           size: 20,
+            VStack(spacing:0) {
+                
+                BoardListRawTopView(store: store, list: list)
+//                    .frame(maxWidth:.infinity)
+               
+                VStack {
+                    OUTextView(text: list.content ?? "",
+                               size: 20,
+                               style: .medium,
+                               color: .white, 
+                               maxLines: 10,
+                               alignment: .leading)
+                    .padding(10)
+                }
+                .frame(maxWidth:.infinity,maxHeight: .infinity,alignment: .center)
+                .background(Color.mainLightColor)
+             
+                
+                
+            }
+            .frame(maxWidth:.infinity,maxHeight: .infinity,alignment: .top)
+            .background(Color.mainLightColor)
+            
+        }
+    }
+}
+
+struct BoardListRawTopView: View {
+    let store: StoreOf<BoardFeature>
+    let list : BoardListTestModel
+    var body: some View {
+        WithViewStore(self.store, observe: { $0 }) { viewStore in
+            HStack {
+                
+                Image("test_profile_image")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width:35 ,height: 35)
+                
+                OUTextView(text: "song_jp",
+                           size: 15,
                            style: .medium,
                            color: .white,
                            alignment: .center)
             }
-            .frame(maxWidth:.infinity,maxHeight: .infinity)
-            .background(Color.darkTextColor)
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(maxWidth:.infinity,alignment: .leading)
+            .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+            .background(Color.mainBackgroundColor)
+            
         }
     }
 }
+
+
 
 #Preview {
     BoardListView(
@@ -65,16 +112,3 @@ struct BoardListRawView: View {
     )
 }
 
-
-// 예시
-// NavigationStack {
-//           List(posts) { post in
-//               NavigationLink(value: post) {
-//                   PostRowView(post: post)
-//               }
-//           }
-//           .navigationTitle("게시글 목록")
-//           .navigationDestination(for: Post.self) { post in
-//               PostDetailView(post: post)
-//           }
-//       }

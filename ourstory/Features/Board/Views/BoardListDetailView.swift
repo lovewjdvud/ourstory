@@ -21,6 +21,7 @@ struct BoardListDetailView: View {
             }
             .frame(maxWidth: .infinity,maxHeight: .infinity,alignment: .top)
             .background(Color.mainBackgroundColor)
+            .toolbar(.hidden, for: .tabBar)
 //            .navigationBarBackButtonHidden(true)
         }
         
