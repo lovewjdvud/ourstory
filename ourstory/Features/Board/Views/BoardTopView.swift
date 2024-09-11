@@ -51,7 +51,8 @@ struct BoardTopView: View {
             .fixedSize(horizontal: false, vertical: true)
             .padding(EdgeInsets(top: 0, leading:20 , bottom: 0, trailing:20 ))
             .frame(maxWidth: .infinity,alignment: .leading)
-            .background(Color.darkTextColor)
+            .background(Color.mainBackgroundColor)
+            .border(width: 1, edges: [.bottom], color: .dividerColor)
         }
     }
 }

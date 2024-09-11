@@ -38,6 +38,12 @@ struct MainTabView: View {
                     }
                 
             } // TabView
+            .onAppear {
+                
+                let appearance = UITabBarAppearance()
+                appearance.backgroundColor = UIColor.mainBackgroundColor
+                UITabBar.appearance().scrollEdgeAppearance = appearance
+            }
         } // WithViewStore
         
     }

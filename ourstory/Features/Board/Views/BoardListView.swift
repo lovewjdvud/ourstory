@@ -14,24 +14,28 @@ struct BoardListView: View {
     let store: StoreOf<BoardFeature>
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
-    
             List {
                 ForEach(viewStore.boardList) { list in
 
-                    ITNavigationViewLink {
+                    ITNavigationViewLink (
+                        destination: {
                         BoardListDetailView(store: store)
-                    } label: {
-                        BoardListRawView(store: store)
-                            .frame(height: 200)
-                           
-                    }
-                    .listRowSeparator(.hidden)
+                            .ouNavigationSubtitle("테스트")
+                    },
+                        label: {
+                            BoardListRawView(store: store)
+                                .frame(maxWidth:.infinity,maxHeight: 400)
+                                .listRowSeparator(.hidden)
+                                .listRowInsets(EdgeInsets())
+                            
+                    },
+                        title: "게시글"
+                    )
+                  
                 }
             }
+            .background(Color.mainBackgroundColor)
             .listStyle(PlainListStyle())
-//            .navigationDestination(for: BoardListTestModel.self) { list in
-//                BoardListDetailView(store: store)
-//            }
         }
     }
 }
@@ -44,10 +48,11 @@ struct BoardListRawView: View {
                 OUTextView(text: "OURSTORY ㅋㅋ",
                            size: 20,
                            style: .medium,
-                           color: .green,
+                           color: .white,
                            alignment: .center)
             }
-           
+            .frame(maxWidth:.infinity,maxHeight: .infinity)
+            .background(Color.darkTextColor)
         }
     }
 }

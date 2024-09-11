@@ -18,64 +18,6 @@
             endingLineNumber = "140"
             landmarkName = "body"
             landmarkType = "24">
-            <Locations>
-               <Location
-                  uuid = "9025343A-6EEB-48A3-A1D0-E71D0507F742 - f34ab07b80c87679"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for closure #3 @Sendable (ComposableArchitecture.Send&lt;ourstory.AuthFeature.Action&gt;) async throws -&gt; () in closure #1 (inout ourstory.AuthFeature.State, ourstory.AuthFeature.Action) -&gt; ComposableArchitecture.Effect&lt;ourstory.AuthFeature.Action&gt; in ourstory.AuthFeature.body.getter : some"
-                  moduleName = "ourstory"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/songjeongpyeong/GitFork/ourstory/ourstory/Features/Auth/AuthFeature.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "144"
-                  endingLineNumber = "144">
-               </Location>
-               <Location
-                  uuid = "9025343A-6EEB-48A3-A1D0-E71D0507F742 - 3ad011291a65a89b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(2) await resume partial function for closure #3 @Sendable (ComposableArchitecture.Send&lt;ourstory.AuthFeature.Action&gt;) async throws -&gt; () in closure #1 (inout ourstory.AuthFeature.State, ourstory.AuthFeature.Action) -&gt; ComposableArchitecture.Effect&lt;ourstory.AuthFeature.Action&gt; in ourstory.AuthFeature.body.getter : some"
-                  moduleName = "ourstory"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/songjeongpyeong/GitFork/ourstory/ourstory/Features/Auth/AuthFeature.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "144"
-                  endingLineNumber = "144">
-               </Location>
-               <Location
-                  uuid = "9025343A-6EEB-48A3-A1D0-E71D0507F742 - 7c6fcccd96bc0277"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for closure #3 @Sendable (ComposableArchitecture.Send&lt;ourstory.AuthFeature.Action&gt;) async throws -&gt; () in closure #1 (inout ourstory.AuthFeature.State, ourstory.AuthFeature.Action) -&gt; ComposableArchitecture.Effect&lt;ourstory.AuthFeature.Action&gt; in ourstory.AuthFeature.body.getter : some"
-                  moduleName = "ourstory"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/songjeongpyeong/GitFork/ourstory/ourstory/Features/Auth/AuthFeature.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "144"
-                  endingLineNumber = "144">
-               </Location>
-               <Location
-                  uuid = "9025343A-6EEB-48A3-A1D0-E71D0507F742 - aa486ff772518046"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(8) suspend resume partial function for closure #3 @Sendable (ComposableArchitecture.Send&lt;ourstory.AuthFeature.Action&gt;) async throws -&gt; () in closure #1 (inout ourstory.AuthFeature.State, ourstory.AuthFeature.Action) -&gt; ComposableArchitecture.Effect&lt;ourstory.AuthFeature.Action&gt; in ourstory.AuthFeature.body.getter : some"
-                  moduleName = "ourstory"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/songjeongpyeong/GitFork/ourstory/ourstory/Features/Auth/AuthFeature.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "144"
-                  endingLineNumber = "144">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -92,6 +34,22 @@
             endingLineNumber = "22"
             landmarkName = "Action"
             landmarkType = "13">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "048B120A-DBF0-4541-AA11-2696E298ED62"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ourstory/Features/Board/Views/BoardListDetailView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
+            landmarkName = "body"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

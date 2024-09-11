@@ -14,15 +14,18 @@ struct BoardView: View {
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             NavigationStack {
-                VStack {
-                    
-                    BoardTopView(store: store)
-                    
-                    BoardListView(store: store)
+//                GeometryReader { geometry in
+                VStack(spacing:0) {
+                        
+                        BoardTopView(store: store)
+                        
+                        BoardListView(store: store)
+                    }
+                    .frame(maxWidth:.infinity,maxHeight: .infinity,alignment: .top)
+              
                 }
-                .frame(maxWidth:.infinity,maxHeight: .infinity,alignment: .top)
-                .background(Color.darkTextColor)
-            }
+                
+//            }
         }
     }
 }

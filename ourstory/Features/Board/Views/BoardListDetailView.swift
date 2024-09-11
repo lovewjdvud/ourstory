@@ -19,7 +19,8 @@ struct BoardListDetailView: View {
                            color: .green,
                            alignment: .center)
             }
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: .infinity,maxHeight: .infinity,alignment: .top)
+            .background(Color.mainBackgroundColor)
 //            .navigationBarBackButtonHidden(true)
         }
         
