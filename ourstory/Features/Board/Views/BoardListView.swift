@@ -17,18 +17,21 @@ struct BoardListView: View {
     
             List {
                 ForEach(viewStore.boardList) { list in
-                    NavigationLink(value: list) {
+
+                    ITNavigationViewLink {
+                        BoardListDetailView(store: store)
+                    } label: {
                         BoardListRawView(store: store)
                             .frame(height: 200)
+                           
                     }
-                    .buttonStyle(PlainButtonStyle()) // 화살표 제거를 위해 PlainButtonStyle 적용
                     .listRowSeparator(.hidden)
                 }
             }
             .listStyle(PlainListStyle())
-            .navigationDestination(for: BoardListTestModel.self) { list in
-                BoardListDetailView(store: store)
-            }
+//            .navigationDestination(for: BoardListTestModel.self) { list in
+//                BoardListDetailView(store: store)
+//            }
         }
     }
 }

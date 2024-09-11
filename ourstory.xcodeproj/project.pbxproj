@@ -71,6 +71,7 @@
 		693B070E2C905D5700640617 /* BoardAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693B070D2C905D5700640617 /* BoardAddView.swift */; };
 		693B07102C905DFB00640617 /* BoardListDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693B070F2C905DFB00640617 /* BoardListDetailView.swift */; };
 		693B07132C90624000640617 /* BoardListTestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693B07122C90624000640617 /* BoardListTestModel.swift */; };
+		693B07162C90751E00640617 /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693B07152C90751E00640617 /* NavigationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -134,6 +135,7 @@
 		693B070D2C905D5700640617 /* BoardAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardAddView.swift; sourceTree = "<group>"; };
 		693B070F2C905DFB00640617 /* BoardListDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListDetailView.swift; sourceTree = "<group>"; };
 		693B07122C90624000640617 /* BoardListTestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListTestModel.swift; sourceTree = "<group>"; };
+		693B07152C90751E00640617 /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -451,6 +453,7 @@
 		6903832F2C85F97000D7681E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				693B07142C90750C00640617 /* Navigation */,
 				6903833B2C86BE1F00D7681E /* TextField */,
 				6903833A2C86BE1A00D7681E /* Text */,
 				690383692C872E5E00D7681E /* GoogleSignInButton.swift */,
@@ -619,6 +622,14 @@
 			path = Test;
 			sourceTree = "<group>";
 		};
+		693B07142C90750C00640617 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				693B07152C90751E00640617 /* NavigationView.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -713,6 +724,7 @@
 				6903832A2C85F45100D7681E /* BoardView.swift in Sources */,
 				690382E82C85A30C00D7681E /* UserClient.swift in Sources */,
 				690383812C883F9900D7681E /* BaseModel.swift in Sources */,
+				693B07162C90751E00640617 /* NavigationView.swift in Sources */,
 				690383502C86CBD000D7681E /* OUTextView.swift in Sources */,
 				690382D22C8582BC00D7681E /* NetworkManager.swift in Sources */,
 				690383032C85BEAD00D7681E /* AuthFeature.swift in Sources */,
