@@ -38,11 +38,11 @@ struct OUNavigationViewLink<Label: View, Destination: View>: View {
                 
             } label: {
                 
-                
+                label
+                    .opacity(0)
+                    .buttonStyle(PlainButtonStyle())
             }
             
-            .opacity(0)
-            .buttonStyle(PlainButtonStyle())
         }
     }
 }
@@ -89,6 +89,9 @@ struct OUNavigationBarContainerView<L, Content,R>: View  where L: View,
             }
             content
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .onAppear{
+                    print("OUNavigationBarContainerView")
+                }
         }
     }
 }

@@ -44,6 +44,7 @@ struct MainTabView: View {
                 appearance.backgroundColor = UIColor.mainBackgroundColor
                 UITabBar.appearance().scrollEdgeAppearance = appearance
             }
+//            .toolbar(viewStore.isMainTab ? .visible : .hidden, for: .tabBar)
         } // WithViewStore
         
     }

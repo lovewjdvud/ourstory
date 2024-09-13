@@ -6,13 +6,26 @@
 //
 
 import SwiftUI
-
+import ComposableArchitecture
 struct BoardAddView: View {
+    let store: StoreOf<BoardFeature>
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        WithViewStore(self.store, observe: { $0 }) { viewStore in
+            VStack {
+                Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+            }
+            .frame(maxWidth:.infinity,maxHeight: .infinity,alignment: .top)
+            .onAppear{
+                viewStore.send(.mainTabToggle(false))
+            }
+        }
     }
 }
 
 #Preview {
-    BoardAddView()
+    BoardAddView(
+        store: Store(initialState: BoardFeature.State()) {
+            BoardFeature()
+        }
+    )
 }

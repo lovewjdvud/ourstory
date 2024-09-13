@@ -10,8 +10,12 @@ import ComposableArchitecture
 import SwiftUI
 struct BoardFeature: Reducer {
     
+    @ObservableState
     struct State: Equatable {
         var boardList : [BoardListTestModel] = boardListTestModel
+        var boardType : [BoardTypeTestModel] = boardTypeTestModel
+        var selectedboardTypeSegment : BoardTypeTestModel = boardTypeTestModel[0]
+        var isMainTab : Bool = true
     }
     
     @CasePathable
@@ -25,6 +29,9 @@ struct BoardFeature: Reducer {
         case fetchDetailBoard
         case fetchDetailBoardResponse
         
+        case mainTabToggle(Bool)
+        
+        case boardSegmentTab(BoardTypeTestModel)
         case cancelFail(CancelID,String)
     }
     
@@ -85,12 +92,19 @@ struct BoardFeature: Reducer {
                     
                     
                 }
+            
+            case .boardSegmentTab(let type) :
+                state.selectedboardTypeSegment = type
+                return .none
                 
             case .cancelFail(let cancelEnum ,let result_msg):
 //                print("AuthFeature Action cancelFail msg = \(result_msg), cancel \(cancelEnum)")
 //                state.isProgress = false
                 return .cancel(id: cancelEnum)
                 
+            case .mainTabToggle(let isTab):
+                state.isMainTab.toggle()
+                return .none
             }
         }
     }

@@ -135,19 +135,25 @@ class GoogleAuthManager: ObservableObject {
                 self?.authenticateUser(for: user, with: error, completion: completion)
             }
         } else {
-            guard let clientID = FirebaseApp.app()?.options.clientID,
-                  let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                  let rootViewController = windowScene.windows.first?.rootViewController else {
-                completion(false, nil, nil, NSError(domain: "GoogleAuthManager", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to get root view controller"]))
-                return
+            DispatchQueue.main.async {
+                guard let clientID = FirebaseApp.app()?.options.clientID,
+                      let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                      let rootViewController = windowScene.windows.first?.rootViewController else {
+                    completion(false, nil, nil, NSError(domain: "GoogleAuthManager", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to get root view controller"]))
+                    return
+                }
+                
+                
+                
+                let config = GIDConfiguration(clientID: clientID)
+                GIDSignIn.sharedInstance.configuration = config
+                
+                GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [weak self] result, error in
+                    self?.authenticateUser(for: result?.user, with: error, completion: completion)
+                }
+                
             }
-
-            let config = GIDConfiguration(clientID: clientID)
-            GIDSignIn.sharedInstance.configuration = config
-
-            GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [weak self] result, error in
-                self?.authenticateUser(for: result?.user, with: error, completion: completion)
-            }
+            
         }
     }
 

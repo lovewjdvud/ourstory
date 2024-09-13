@@ -42,14 +42,15 @@ extension UserClient: DependencyKey {
                                                  body: request_model,
                                                  requiresAuth: false)
             },
+//            print("userCilent 회원가입 요청")
             // 회원가입 요청
             signUp: { request_data in
-                
+               
                 try await networkManager.request("/user/join",
                                                  method: .post,
                                                  queryItems: [],
                                                  body: request_data,
-                                                 requiresAuth: true)
+                                                 requiresAuth: false)
             },
             // 프로필 업데이트
             profileUpdate: { request in

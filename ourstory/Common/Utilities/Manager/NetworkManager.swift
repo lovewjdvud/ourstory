@@ -45,13 +45,13 @@ struct NetworkManager {
                                 requiresAuth: Bool = true) async throws -> T {
         // URL 구성
         guard var components = URLComponents(string: baseURL + endpoint) else {
-            throw NetworkError.invalidURL
+            throw NetworkError.invalidURL(message: "발생 : NetworkManager request - URL 구성, Error Type : invalidURL")
         }
         print("requestrequest \(baseURL + endpoint)")
         components.queryItems = queryItems.isEmpty ? nil : queryItems
         
         guard let url = components.url else {
-            throw NetworkError.invalidURL
+            throw NetworkError.invalidURL(message: "발생 : NetworkManager request - URL components , Error Type : invalidURL")
         }
         
         // URLRequest 생성 및 설정
@@ -70,11 +70,9 @@ struct NetworkManager {
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         
         // 인증이 필요한 경우 JWT 토큰을 헤더에 추가
-        
-//        print("NetworkManager AuthManager.shared.getToken() \(AuthManager.shared.getToken()) ")
         if requiresAuth {
             guard let token = AuthManager.shared.getToken() else {
-                throw NetworkError.unauthorized
+                throw NetworkError.unauthorized(message: "발생 : NetworkManager request - JWT 토큰을 헤더에 추가 , Error Type : unauthorized")
             }
 //            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
             request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
@@ -86,7 +84,7 @@ struct NetworkManager {
             
             // HTTP 응답 확인
             guard let httpResponse = response as? HTTPURLResponse else {
-                throw NetworkError.invalidResponse
+                throw NetworkError.invalidResponse(message: "발생 : NetworkManager request - HTTP 응답 확인, Error Type : invalidResponse")
             }
     
             // 상태 코드에 따른 처리
@@ -101,11 +99,11 @@ struct NetworkManager {
             case 401:
                 print("NetworkManager statusCode \(httpResponse.statusCode) ")
                 print("requestrequest statusCode = 400 description \(httpResponse.description) ")
-                throw NetworkError.unauthorized
+                throw NetworkError.unauthorized(message: "발생 : NetworkManager request - 네트워크 요청 실행 실행 후 401 결과 , Error Type : unauthorized")
             default:
                 print("NetworkManager default statusCode \(httpResponse.statusCode) ")
                 print("requestrequest default statusCode = 400 description \(httpResponse.description) ")
-                throw NetworkError.invalidResponse
+                throw NetworkError.invalidResponse(message: "발생 : NetworkManager request - 네트워크 요청 실행 실행 후 default 결과, Error Type : invalidResponse ")
             }
         } catch {
             print("NetworkManager catch \(error) ")
@@ -127,14 +125,15 @@ struct NetworkManager {
                                    queryItems: [URLQueryItem] = [],
                                    body: Data? = nil,
                                    requiresAuth: Bool = true) async throws {
+           
            guard var components = URLComponents(string: baseURL + endpoint) else {
-               throw NetworkError.invalidURL
+               throw NetworkError.invalidURL(message: "발생 : NetworkManager requestWithoutResponse - URLComponents , Error Type : invalidURL ")
            }
            
            components.queryItems = queryItems.isEmpty ? nil : queryItems
            
            guard let url = components.url else {
-               throw NetworkError.invalidURL
+               throw NetworkError.invalidURL(message: "발생 : NetworkManager requestWithoutResponse - components url  , Error Type : invalidURL ")
            }
            
            var request = URLRequest(url: url)
@@ -148,7 +147,7 @@ struct NetworkManager {
            // 인증이 필요한 경우 JWT 토큰을 헤더에 추가
            if requiresAuth {
                guard let token = AuthManager.shared.getToken() else {
-                   throw NetworkError.unauthorized
+                   throw NetworkError.unauthorized(message: "발생 : NetworkManager requestWithoutResponse - JWT 토큰을 헤더에 추가  , Error Type : unauthorized ")
                }
                request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
            }
@@ -156,16 +155,16 @@ struct NetworkManager {
            let (_, response) = try await session.data(for: request)
            
            guard let httpResponse = response as? HTTPURLResponse else {
-               throw NetworkError.invalidResponse
+               throw NetworkError.invalidResponse(message: "발생 : NetworkManager requestWithoutResponse - HTTPURLResponse  , Error Type : invalidResponse ")
            }
            
            switch httpResponse.statusCode {
            case 200...299:
                return // 성공적인 응답, 아무 것도 반환하지 않음
            case 401:
-               throw NetworkError.unauthorized
+               throw NetworkError.unauthorized(message: "발생 : NetworkManager requestWithoutResponse - httpResponse statusCode 401  , Error Type : unauthorized ")
            default:
-               throw NetworkError.invalidResponse
+               throw NetworkError.invalidResponse(message: "발생 : NetworkManager requestWithoutResponse - httpResponse statusCode default  , Error Type : invalidResponse ")
            }
        }
     
@@ -174,7 +173,7 @@ struct NetworkManager {
                                                    fileData: [String: (data: Data, fileName: String, mimeType: String)],
                                                    requiresAuth: Bool = true) async throws -> T {
             guard let url = URL(string: baseURL + endpoint) else {
-                throw NetworkError.invalidURL
+                throw NetworkError.invalidURL(message: "발생 : NetworkManager uploadMultipartFormData - Url 설정 , Error Type : invalidURL ")
             }
 
             let boundary = "Boundary-\(UUID().uuidString)"
@@ -184,7 +183,7 @@ struct NetworkManager {
 
             if requiresAuth {
                 guard let token = AuthManager.shared.getToken() else {
-                    throw NetworkError.unauthorized
+                    throw NetworkError.unauthorized(message: "발생 : NetworkManager uploadMultipartFormData - requiresAuth  , Error Type : unauthorized ")
                 }
                 request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
             }
@@ -214,7 +213,7 @@ struct NetworkManager {
                 let (data, response) = try await session.data(for: request)
 
                 guard let httpResponse = response as? HTTPURLResponse else {
-                    throw NetworkError.invalidResponse
+                    throw NetworkError.invalidResponse(message: "발생 : NetworkManager uploadMultipartFormData - httpResponse , Error Type : invalidResponse ")
                 }
 
                 switch httpResponse.statusCode {
@@ -225,9 +224,9 @@ struct NetworkManager {
                         throw NetworkError.decodingFailed(error)
                     }
                 case 401:
-                    throw NetworkError.unauthorized
+                    throw NetworkError.unauthorized(message: "발생 : NetworkManager uploadMultipartFormData - httpResponse 401, Error Type : unauthorized ")
                 default:
-                    throw NetworkError.invalidResponse
+                    throw NetworkError.invalidResponse(message: "발생 : NetworkManager uploadMultipartFormData - httpResponse default , Error Type : invalidResponse ")
                 }
             } catch {
                 throw NetworkError.requestFailed(error)

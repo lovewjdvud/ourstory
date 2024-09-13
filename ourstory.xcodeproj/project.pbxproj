@@ -81,6 +81,8 @@
 		693B07252C9182D200640617 /* View+PreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693B07242C9182D200640617 /* View+PreferenceKey.swift */; };
 		693B07272C91C7C200640617 /* BoardListRawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693B07262C91C7C200640617 /* BoardListRawView.swift */; };
 		693B07292C91DEC500640617 /* BoardTypeTestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693B07282C91DEC500640617 /* BoardTypeTestModel.swift */; };
+		69B5F55A2C92D65F007A1F6B /* BoardTypeSegmentMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69B5F5592C92D65F007A1F6B /* BoardTypeSegmentMainView.swift */; };
+		69B5F55C2C9425E0007A1F6B /* GlobalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69B5F55B2C9425E0007A1F6B /* GlobalState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -154,6 +156,8 @@
 		693B07242C9182D200640617 /* View+PreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+PreferenceKey.swift"; sourceTree = "<group>"; };
 		693B07262C91C7C200640617 /* BoardListRawView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListRawView.swift; sourceTree = "<group>"; };
 		693B07282C91DEC500640617 /* BoardTypeTestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardTypeTestModel.swift; sourceTree = "<group>"; };
+		69B5F5592C92D65F007A1F6B /* BoardTypeSegmentMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardTypeSegmentMainView.swift; sourceTree = "<group>"; };
+		69B5F55B2C9425E0007A1F6B /* GlobalState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -370,6 +374,7 @@
 			children = (
 				6903835B2C86D84400D7681E /* View */,
 				690382FE2C85BCB400D7681E /* Config */,
+				69B5F55B2C9425E0007A1F6B /* GlobalState.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -406,6 +411,7 @@
 				693B070F2C905DFB00640617 /* BoardListDetailView.swift */,
 				693B070D2C905D5700640617 /* BoardAddView.swift */,
 				693B07092C902B5A00640617 /* BoardTopView.swift */,
+				69B5F5592C92D65F007A1F6B /* BoardTypeSegmentMainView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -775,6 +781,7 @@
 				693B071B2C91575800640617 /* OUNavigationBarView.swift in Sources */,
 				6903832E2C85F95300D7681E /* MainTabView.swift in Sources */,
 				693B07082C901AAE00640617 /* Page.swift in Sources */,
+				69B5F55C2C9425E0007A1F6B /* GlobalState.swift in Sources */,
 				690382862C7859B200D7681E /* ContentView.swift in Sources */,
 				690382F32C85A65100D7681E /* BoardClient.swift in Sources */,
 				690382F82C85A68C00D7681E /* ProfileClient.swift in Sources */,
@@ -806,6 +813,7 @@
 				690383872C8891EA00D7681E /* SignInRequestModel.swift in Sources */,
 				693B07102C905DFB00640617 /* BoardListDetailView.swift in Sources */,
 				693B070C2C905CE500640617 /* BoardListView.swift in Sources */,
+				69B5F55A2C92D65F007A1F6B /* BoardTypeSegmentMainView.swift in Sources */,
 				6903837B2C881AEC00D7681E /* UserDefaultsManager.swift in Sources */,
 				693B070E2C905D5700640617 /* BoardAddView.swift in Sources */,
 				690383702C873B0B00D7681E /* TestCan.swift in Sources */,

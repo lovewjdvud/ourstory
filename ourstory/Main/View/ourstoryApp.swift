@@ -11,7 +11,7 @@ import ComposableArchitecture
 @main
 struct ourstoryApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    
+
     var body: some Scene {
         WindowGroup {
             
@@ -20,8 +20,7 @@ struct ourstoryApp: App {
                     AppFeature()
                 }
             )
-            
-            
+
         }
     }
 }

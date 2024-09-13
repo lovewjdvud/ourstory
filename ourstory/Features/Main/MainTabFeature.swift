@@ -17,6 +17,7 @@ struct MainTabFeature: Reducer {
         var profileState = ProfileFeature.State()
         var selectedTab: Page = .board // 선택된 탭
     
+        var isMainTab : Bool = true
     }
  
     @CasePathable
@@ -38,19 +39,20 @@ struct MainTabFeature: Reducer {
             case .selectTab(let tab):
                 state.selectedTab = tab // 선택된 탭 상태 변경
                 return .none
-            case .board, .profile:
+                
+            case .board(let boardAction):
+                if case .mainTabToggle(let isMaintab) = boardAction {
+                    print("mainTabTogglemainTabToggle \(isMaintab)")
+                    state.isMainTab = isMaintab
+                }
                 return .none
-           
+            case .profile(let profileAction):
+                if case .mainTabToggle(let isMaintab) = profileAction {
+                    state.isMainTab = isMaintab
+                }
+                return .none
             }
         }
-        
-//        .combine(
-//        BoardFeature().pullback(state: /.boardState, action: /Action.board),
-//            ProfileFeature().pullback(
-//                    state: \.profileState,
-//                    action: /ProfileFeature.Action.profile
-//                )
-//        )
         
         Scope(state: \.boardState, action: \.board) {
             BoardFeature()

@@ -15,6 +15,12 @@ struct BoardListView: View {
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             List {
+                
+                BoardTypeSegmentMainView(store: store)
+                    .frame(maxWidth:.infinity)
+                    .listStyle(PlainListStyle())
+                    .listRowInsets(EdgeInsets())
+                
                 ForEach(viewStore.boardList) { list in
 
                     OUNavigationViewLink (
@@ -32,12 +38,11 @@ struct BoardListView: View {
                         title: "게시글"
                     )
                     .frame(maxWidth:.infinity,minHeight: 200,maxHeight: 300)
-//                    .background(Color.red)
                     .listRowSeparator(.hidden)
                     .listRowInsets(EdgeInsets())
-                   
-                }
-            }
+                } // ForEach
+                
+            } // List
             .background(Color.mainBackgroundColor)
             .listStyle(PlainListStyle())
         }
@@ -95,7 +100,7 @@ struct BoardListRawTopView: View {
             }
             .fixedSize(horizontal: false, vertical: true)
             .frame(maxWidth:.infinity,alignment: .leading)
-            .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+            .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 0))
             .background(Color.mainBackgroundColor)
             
         }

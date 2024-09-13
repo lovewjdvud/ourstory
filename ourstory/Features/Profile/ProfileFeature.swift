@@ -17,6 +17,8 @@ struct ProfileFeature: Reducer {
     
     enum Action: BindableAction,Equatable {
         case binding(BindingAction<State>)
+        
+        case mainTabToggle(Bool)
     }
     
     @Dependency(\.profileClient) var profileClient
@@ -28,6 +30,9 @@ struct ProfileFeature: Reducer {
         Reduce { state, action in
             switch action {
             case.binding :
+                return .none
+                
+            case .mainTabToggle(let isTab):
                 return .none
            
             }

@@ -30,6 +30,7 @@ public struct OUIconButton: View {
         } label: {
             VStack {
                 icon
+                    .resizable()
                     .scaledToFit()
             }
             .frame(width: size.width, height: size.height)

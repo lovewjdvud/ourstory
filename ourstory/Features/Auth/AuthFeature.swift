@@ -77,10 +77,35 @@ struct AuthFeature: Reducer {
             
             // MARK: 로그인 요청,응답 및 로그아웃
             case .signIn(let email, let name):
-                print("AuthFeature Action signIn 진입")
+                print("AuthFeature Action signIn 진입  email = \(email), name = \(name)")
                 return .run { send in
                     do {
-                        let signInRequestModel = SignInRequestModel(email: email)
+                       
+                         let signInRequestModel = SignInRequestModel(email: email)
+                        
+//                         // 7초 타임아웃 설정
+//                          let signInResult = try await withThrowingTaskGroup(of: SignInResponseModel.self) { group in
+//                              
+//                              // 로그인 요청 task
+//                              group.addTask {
+//                                  return try await userClient.signIn(signInRequestModel)
+//                              }
+//                              
+////                              // 7초 후 타임아웃 처리 task
+////                              group.addTask {
+////                                  try await Task.sleep(nanoseconds: 20_000_000_000) // 7초 대기
+////                                  throw NetworkError.timeout(message: "Error Message : 시간초과") // 타임아웃 에러 발생
+////                              }
+//                              
+//                              // 첫 번째 완료된 Task의 값을 반환
+//                              for try await result in group {
+//                                  return result // 첫 번째 Task 결과 반환
+//                              }
+//                              
+//                              throw NetworkError.unknown(message: "Error Message : 값이 없음") // 이 줄이 실행될 경우 예상치 못한 상황이므로 에러 처리
+//                          }
+
+
                         let signInResult = try await userClient.signIn(signInRequestModel)
                         await send(.signInResponse(signInResult,email,name))
                     } catch(let error as NetworkError) {
@@ -141,14 +166,18 @@ struct AuthFeature: Reducer {
                                                                     phoneNumber: nil,
                                                                     profileImageUrl: nil,
                                                                     snsType: nil)
+                        print("AuthFeature Action signUp result 1")
                         let signUpResultModel = try await userClient.signUp(signUpRequestModel)
+                        print("AuthFeature Action signUp result 2")
                         if let signUpResult = signUpResultModel {
+                        
+                            
                             await send(.signUpResponse(signUpResult,email,name))
                         }
                       
                     } catch(let error as NetworkError) {
                        
-                        await send(.cancelFail(.signUp, " signIn fail \(error.localizedDescription)"))
+                        await send(.cancelFail(.signUp, " signUp fail Error \(error.description)"))
                     }
                     
                 }
