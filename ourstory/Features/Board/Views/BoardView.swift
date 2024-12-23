@@ -16,48 +16,46 @@ struct BoardView: View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             NavigationView {
                 GeometryReader { geometry in
-                ZStack {
-                    VStack(spacing:0) {
-                        
-                        BoardTopView(store: store)
-                        
-                        BoardListView(store: store)
-                        
-                    }
-                    .frame(maxWidth:.infinity,maxHeight: .infinity,alignment: .top)
-                    .zIndex(0)
-//
-//                    VStack {
-//
-//                        OUNavigationViewLink (
-//                            destination: {
-//                            
-//                                BoardAddView(store: store)
-//                                
-//                        },
-//                            label: {
+                    ZStack {
+                        VStack(spacing:0) {
+                            
+                            BoardTopView(store: store)
+                            
+                            BoardListView(store: store)
+                            
+                        }
+                        .frame(maxWidth:.infinity,maxHeight: .infinity,alignment: .top)
+                        .zIndex(0)
+
+                        OUNavigationViewLink (
+                            destination: {
+
+                                BoardAddView(store: store)
+
+                        },
+                            label: {
                                 Image("write_icon")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 64,height: 64)
                                     .padding(EdgeInsets(top: 0, leading: 0, bottom: 40, trailing: 40))
-                                
-                                    .onTapGesture {
-                                        viewStore.send(.mainTabToggle(true))
-                                    }
-//                        },
-//                            title: "게시글 작성"
-//                        )
-//                        .frame(maxWidth:.infinity,maxHeight: .infinity)
+                            },
+                            title: "게시글 작성"
+                        )
+                        .frame(maxWidth:.infinity,maxHeight: .infinity,alignment: .bottomTrailing)
+                        .zIndex(1)
+                        
                     }
-                    .frame(maxWidth:.infinity,maxHeight: .infinity,alignment: .bottomTrailing)
-                    .zIndex(1)
-                    
+                    .frame(maxWidth:.infinity,maxHeight: .infinity,alignment: .top)
+               
                 }
-                .toolbar(viewStore.isMainTab ? .visible : .hidden, for: .tabBar)
+               
                 .onAppear{
+                    print("BoardView onAppear \(viewStore.isMainTab)")
                     viewStore.send(.mainTabToggle(true))
                 }
+                
+                .toolbar(viewStore.isMainTab ? .visible : .hidden, for: .tabBar)
                 .frame(maxWidth:.infinity,maxHeight: .infinity,alignment: .top)
             }
                 

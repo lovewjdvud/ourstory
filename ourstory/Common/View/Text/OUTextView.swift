@@ -14,16 +14,22 @@ enum OUTextStyle {
     
     func font(size: CGFloat) -> Font {
         switch self {
+            
         case .light:
             return .pretendardLight(size)
+            
         case .regular:
             return .pretendardRegular(size)
+            
         case .medium:
             return .pretendardMedium(size)
+            
         case .semiBold:
             return .pretendardSemiBold(size)
+            
         case .bold:
             return .pretendardBold(size)
+            
         }
     }
 }

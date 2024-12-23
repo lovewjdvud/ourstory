@@ -10,14 +10,20 @@ import ComposableArchitecture
 struct BoardAddView: View {
     let store: StoreOf<BoardFeature>
     var body: some View {
+        
         WithViewStore(self.store, observe: { $0 }) { viewStore in
+            
             VStack {
+                
                 Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+                
             }
-            .frame(maxWidth:.infinity,maxHeight: .infinity,alignment: .top)
+            .frame(maxWidth: .infinity,maxHeight: .infinity,alignment: .top)
+            .background(Color.mainBackgroundColor)
             .onAppear{
                 viewStore.send(.mainTabToggle(false))
             }
+            
         }
     }
 }

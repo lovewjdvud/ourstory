@@ -16,8 +16,7 @@ struct MainTabView: View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             TabView(selection: viewStore.binding(
                             get: \.selectedTab,
-                            send: MainTabFeature.Action.selectTab
-                        ))
+                            send: MainTabFeature.Action.selectTab ))
             {
                 
                 BoardView(store: store.scope(state: \.boardState, action: \.board))

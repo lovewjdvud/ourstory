@@ -7,18 +7,6 @@
 
 import Foundation
 
-//enum NetworkError: Error {
-//    case invalidURL
-//    case requestFailed(Error)
-//    case invalidResponse
-//    case decodingFailed(Error)
-//    case unauthorized
-//    case encodingFailed(Error)
-//    case timeout
-//    case unknown
-//}
-
-
 enum NetworkError: Error, CustomStringConvertible {
     case invalidURL(message: String = "invalidURL")
     case requestFailed(message: String = "requestFailed",Error)

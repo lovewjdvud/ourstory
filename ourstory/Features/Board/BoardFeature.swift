@@ -87,7 +87,7 @@ struct BoardFeature: Reducer {
                 }
                 .cancellable(id: CancelID.fetchDetailBoard)
                 
-            case .fetchDetailBoardResponse:
+            case .fetchDetailBoardResponse: 
                 return .run { send in
                     
                     
@@ -103,7 +103,8 @@ struct BoardFeature: Reducer {
                 return .cancel(id: cancelEnum)
                 
             case .mainTabToggle(let isTab):
-                state.isMainTab.toggle()
+                print("mainTabTogglemainTabToggle ")
+                state.isMainTab = isTab
                 return .none
             }
         }

@@ -15,7 +15,6 @@ struct BoardListView: View {
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             List {
-                
                 BoardTypeSegmentMainView(store: store)
                     .frame(maxWidth:.infinity)
                     .listStyle(PlainListStyle())

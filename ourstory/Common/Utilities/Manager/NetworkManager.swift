@@ -47,7 +47,7 @@ struct NetworkManager {
         guard var components = URLComponents(string: baseURL + endpoint) else {
             throw NetworkError.invalidURL(message: "발생 : NetworkManager request - URL 구성, Error Type : invalidURL")
         }
-        print("requestrequest \(baseURL + endpoint)")
+      
         components.queryItems = queryItems.isEmpty ? nil : queryItems
         
         guard let url = components.url else {
@@ -81,12 +81,13 @@ struct NetworkManager {
         do {
             // 네트워크 요청 실행
             let (data, response) = try await session.data(for: request)
-            
+
             // HTTP 응답 확인
             guard let httpResponse = response as? HTTPURLResponse else {
                 throw NetworkError.invalidResponse(message: "발생 : NetworkManager request - HTTP 응답 확인, Error Type : invalidResponse")
             }
-    
+            
+            print("NetworkManager \(httpResponse.statusCode)")
             // 상태 코드에 따른 처리
             switch httpResponse.statusCode {
             case 200...299:

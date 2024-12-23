@@ -8,10 +8,10 @@
 import SwiftUI
 import ComposableArchitecture
 
-
 struct LoginView: View {
-    let store: StoreOf<AuthFeature>
     
+    let store: StoreOf<AuthFeature>
+
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
       //  WithViewStore(self.store) { viewStore in
