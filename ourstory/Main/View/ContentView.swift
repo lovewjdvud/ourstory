@@ -18,14 +18,14 @@ struct ContentView: View {
             VStack {
 //                MainTabView(store: store.scope(state: \.mainTab, action: \.mainTab))
                 
-                if viewStore.isLoggedIn {
+//                if viewStore.isLoggedIn {
                     MainTabView(store: store.scope(state: \.mainTab, action: \.mainTab))
 //                       
-                } else {
-                    
-                    LoginView(store: store.scope(state: \.authTab, action: \.authTab))
-                    
-                }
+//                } else {
+//                    
+//                    LoginView(store: store.scope(state: \.authTab, action: \.authTab))
+//                    
+//                }
             }
             .frame(maxWidth:.infinity,maxHeight: .infinity)
             .onAppear {

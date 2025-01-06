@@ -1,5 +1,5 @@
 {
-  "originHash" : "a955c83054724beee8b0e37cc0638ffec2b287c87475213283da817cd1f04b3a",
+  "originHash" : "d2bcc81a18ed6a8c526bd1a18c04bad3170b50dea699b4c84e1766a824c18968",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -53,6 +53,15 @@
       "state" : {
         "revision" : "9118aca998dbe2ceac45d64b21a91c6376928df7",
         "version" : "11.1.0"
+      }
+    },
+    {
+      "identity" : "flowstacks",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/johnpatrickmorgan/FlowStacks",
+      "state" : {
+        "revision" : "a2b974b81612e1e8ee3ecd757d936a2919527356",
+        "version" : "0.4.1"
       }
     },
     {
@@ -260,6 +269,15 @@
       "state" : {
         "revision" : "515f79b522918f83483068d99c68daeb5116342d",
         "version" : "600.0.0-prerelease-2024-08-20"
+      }
+    },
+    {
+      "identity" : "tcacoordinators",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/johnpatrickmorgan/TCACoordinators",
+      "state" : {
+        "revision" : "8d2b3f9bbb5778fc6a20cde98bb45592e4ef0431",
+        "version" : "0.10.1"
       }
     },
     {

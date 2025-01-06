@@ -63,6 +63,7 @@
 		690383832C88408200D7681E /* SignInResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690383822C88408200D7681E /* SignInResponseModel.swift */; };
 		690383852C8840DD00D7681E /* JwtResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690383842C8840DD00D7681E /* JwtResponseModel.swift */; };
 		690383872C8891EA00D7681E /* SignInRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690383862C8891EA00D7681E /* SignInRequestModel.swift */; };
+		6928C4B72D2BD06F00048702 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = 6928C4B62D2BD06F00048702 /* TCACoordinators */; };
 		69349E6B2C8B26C9006F8C88 /* SignUpResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69349E6A2C8B26C9006F8C88 /* SignUpResponseModel.swift */; };
 		693B06FD2C8F136500640617 /* BoardListResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693B06FC2C8F136500640617 /* BoardListResponseModel.swift */; };
 		693B07082C901AAE00640617 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693B07072C901AAE00640617 /* Page.swift */; };
@@ -167,6 +168,7 @@
 			files = (
 				690382DB2C858FC700D7681E /* ComposableArchitecture in Frameworks */,
 				690383682C86E48B00D7681E /* GoogleSignInSwift in Frameworks */,
+				6928C4B72D2BD06F00048702 /* TCACoordinators in Frameworks */,
 				690382DE2C8590D300D7681E /* Alamofire in Frameworks */,
 				690383632C86E40500D7681E /* FirebaseAnalytics in Frameworks */,
 				690383612C86E3F900D7681E /* FirebaseAuth in Frameworks */,
@@ -257,6 +259,7 @@
 				690382E32C85A15700D7681E /* Profile */,
 				690382E42C85A18300D7681E /* Comment */,
 				690382ED2C85A3BB00D7681E /* ChatRoom */,
+				6928C4B32D2BC91E00048702 /* Common */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -611,6 +614,13 @@
 			path = Response;
 			sourceTree = "<group>";
 		};
+		6928C4B32D2BC91E00048702 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		693B06F92C8F12DC00640617 /* Board */ = {
 			isa = PBXGroup;
 			children = (
@@ -694,6 +704,7 @@
 				690383622C86E40500D7681E /* FirebaseAnalytics */,
 				690383652C86E48B00D7681E /* GoogleSignIn */,
 				690383672C86E48B00D7681E /* GoogleSignInSwift */,
+				6928C4B62D2BD06F00048702 /* TCACoordinators */,
 			);
 			productName = ourstory;
 			productReference = 690382802C7859B200D7681E /* ourstory.app */;
@@ -728,6 +739,7 @@
 				690382DC2C8590D300D7681E /* XCRemoteSwiftPackageReference "Alamofire" */,
 				6903835E2C86E3C300D7681E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				690383642C86E48B00D7681E /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				6928C4B52D2BD06F00048702 /* XCRemoteSwiftPackageReference "TCACoordinators" */,
 			);
 			productRefGroup = 690382812C7859B200D7681E /* Products */;
 			projectDirPath = "";
@@ -1068,6 +1080,14 @@
 				minimumVersion = 8.0.0;
 			};
 		};
+		6928C4B52D2BD06F00048702 /* XCRemoteSwiftPackageReference "TCACoordinators" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/johnpatrickmorgan/TCACoordinators";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.10.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1100,6 +1120,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 690383642C86E48B00D7681E /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignInSwift;
+		};
+		6928C4B62D2BD06F00048702 /* TCACoordinators */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6928C4B52D2BD06F00048702 /* XCRemoteSwiftPackageReference "TCACoordinators" */;
+			productName = TCACoordinators;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
